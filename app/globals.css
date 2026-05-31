@@ -1,0 +1,346 @@
+@import "tailwindcss";
+
+/* ============================================================
+   THEME TOKENS — ported from mockups/index.html
+   ============================================================ */
+:root {
+  /* Surface */
+  --bg-0: #0a0612;
+  --bg-1: #140821;
+  --bg-card: #1a0f2e;
+  --bg-card-2: #150a26;
+
+  /* Borders */
+  --border: rgba(139, 92, 246, 0.15);
+  --border-strong: rgba(168, 85, 247, 0.35);
+
+  /* Brand */
+  --violet: #a855f7;
+  --violet-2: #7c3aed;
+  --violet-glow: rgba(168, 85, 247, 0.35);
+  --pill-bg: rgba(168, 85, 247, 0.12);
+
+  /* Text */
+  --text: #ffffff;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+}
+
+/* Expose tokens to Tailwind utilities (text-violet, bg-bg-card, etc.) */
+@theme inline {
+  --color-bg-0: var(--bg-0);
+  --color-bg-1: var(--bg-1);
+  --color-bg-card: var(--bg-card);
+  --color-bg-card-2: var(--bg-card-2);
+  --color-border-soft: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-violet: var(--violet);
+  --color-violet-2: var(--violet-2);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-dim: var(--text-dim);
+
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-script: var(--font-sacramento);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+html, body {
+  background: var(--bg-0);
+  color: var(--text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Fixed star field across the whole page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,0.6) 50%, transparent 50%),
+    radial-gradient(1px 1px at 78% 22%, rgba(255,255,255,0.45) 50%, transparent 50%),
+    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.5) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 88% 78%, rgba(255,255,255,0.55) 50%, transparent 50%),
+    radial-gradient(1px 1px at 55% 88%, rgba(255,255,255,0.4) 50%, transparent 50%),
+    radial-gradient(1px 1px at 6% 55%, rgba(255,255,255,0.35) 50%, transparent 50%),
+    radial-gradient(1px 1px at 95% 45%, rgba(255,255,255,0.4) 50%, transparent 50%);
+  z-index: 0;
+}
+
+section { position: relative; z-index: 1; }
+
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ============================================================
+   SECTION BACKGROUNDS WITH IMAGE OVERLAYS
+   ============================================================ */
+.hero-section-bg {
+  background:
+    linear-gradient(to right,
+      var(--bg-0) 0%,
+      rgba(10, 6, 18, 0.94) 22%,
+      rgba(10, 6, 18, 0.55) 42%,
+      rgba(10, 6, 18, 0.15) 58%,
+      transparent 72%),
+    url('/images/hero-bg.webp') right center / cover no-repeat;
+}
+@media (max-width: 768px) {
+  .hero-section-bg { background: var(--bg-0); }
+}
+
+.hero-mobile-image {
+  background: url('/images/hero-bg.webp') center/cover no-repeat;
+}
+
+.about-section-bg {
+  background:
+    linear-gradient(rgba(11, 7, 30, 0.78), rgba(11, 7, 30, 0.78)),
+    url('/images/about-bg.webp') center/cover no-repeat;
+}
+
+.contact-card-bg {
+  background:
+    linear-gradient(to right, rgba(10, 6, 18, 0.92) 0%, rgba(10, 6, 18, 0.6) 35%, rgba(10, 6, 18, 0.15) 65%, transparent 100%),
+    url('/images/contact-bg.webp') center/cover no-repeat;
+}
+@media (max-width: 768px) {
+  .contact-card-bg {
+    background:
+      linear-gradient(to bottom, rgba(10, 6, 18, 0.55) 0%, rgba(10, 6, 18, 0.35) 35%, rgba(10, 6, 18, 0.55) 70%, rgba(10, 6, 18, 0.85) 100%),
+      url('/images/contact-bg.webp') 72% 28% / cover no-repeat;
+  }
+}
+
+/* CP card — about-bg fills from bottom, fades up to card bg */
+.cp-card-art { position: relative; overflow: hidden; }
+.cp-card-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      transparent 0%,
+      rgba(26, 15, 46, 0.45) 35%,
+      rgba(26, 15, 46, 0.88) 65%,
+      var(--bg-card) 100%
+    ),
+    url('/images/about-bg.webp') center bottom / cover no-repeat;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+.cp-card-art:hover::after { opacity: 1; }
+.cp-card-art > *:not(.absolute) { position: relative; z-index: 1; }
+
+/* Mobile menu — decorative bottom crop of about-bg */
+.overlay-bottom-art { position: relative; overflow: hidden; }
+.overlay-bottom-art::after {
+  content: '';
+  position: absolute;
+  bottom: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, transparent 35%, rgba(15, 8, 28, 0.6) 70%, rgba(15, 8, 28, 0.95) 100%),
+    url('/images/about-bg.webp') center/cover no-repeat;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
+}
+.overlay-bottom-art > * { position: relative; z-index: 1; }
+
+/* Hero mobile image bottom fade */
+.hero-mobile-fade { position: relative; overflow: hidden; }
+.hero-mobile-fade::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(10,6,18,0.6) 50%, var(--bg-0) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ============================================================
+   EXPERIENCE TIMELINE
+   ============================================================ */
+.exp-line-h {
+  position: absolute;
+  top: 56px;
+  left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(168, 85, 247, 0.5) 8%,
+    rgba(168, 85, 247, 0.5) 92%,
+    transparent 100%
+  );
+  z-index: 0;
+}
+@media (max-width: 768px) {
+  .exp-line-h {
+    top: 24px; bottom: 24px;
+    left: 50%; transform: translateX(-138px);
+    right: auto;
+    width: 1px; height: auto;
+    background: linear-gradient(to bottom, transparent 0%, rgba(168, 85, 247, 0.5) 6%, rgba(168, 85, 247, 0.5) 94%, transparent 100%);
+  }
+}
+
+/* ============================================================
+   PHONE MOCKUP (POCKITA)
+   ============================================================ */
+.phone-frame {
+  width: 260px; height: 520px;
+  background: var(--bg-0);
+  border: 8px solid #2a1147;
+  border-radius: 38px;
+  padding: 14px 12px;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7);
+}
+
+/* ============================================================
+   PRINT STYLES (for /cv page → Save as PDF, single A4 page)
+   ============================================================ */
+@media print {
+  /* Force white background, black text */
+  html, body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    overflow: visible !important;
+    font-size: 9.5pt !important;
+    line-height: 1.35 !important;
+  }
+  /* Kill all the cosmic decoration */
+  body::before { display: none !important; }
+  section::before, section::after { display: none !important; }
+
+  /* Hide things that don't belong on paper */
+  .no-print,
+  nav,
+  [aria-label="Open menu"],
+  footer { display: none !important; }
+
+  /* CV root — single-page layout */
+  .cv-root {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: #111111 !important;
+  }
+  .cv-root * {
+    color: inherit !important;
+    background: transparent !important;
+    border-color: #d4d4d8 !important;
+    box-shadow: none !important;
+  }
+  /* Accent color for headings + section labels */
+  .cv-root .text-violet,
+  .cv-root .cv-section-title,
+  .cv-root .cv-skill-group {
+    color: #6d28d9 !important;
+  }
+  .cv-root h1, .cv-root h2, .cv-root h3 {
+    color: #111111 !important;
+  }
+  .cv-root .cv-body,
+  .cv-root .text-text-muted {
+    color: #3f3f46 !important;
+  }
+  .cv-root .text-text-dim {
+    color: #6b7280 !important;
+  }
+
+  /* HEADER — compact */
+  .cv-root .cv-header {
+    border-color: #d4d4d8 !important;
+    padding-bottom: 0.5rem !important;
+  }
+  .cv-root .cv-header h1 {
+    font-size: 22pt !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+  }
+  .cv-root .cv-header > div:first-of-type + div {
+    font-size: 11pt !important;
+    margin-top: 2pt !important;
+  }
+  .cv-root .cv-meta {
+    margin-top: 6pt !important;
+    font-size: 8.5pt !important;
+    gap: 4pt 14pt !important;
+  }
+
+  /* SECTIONS — tighter gaps */
+  .cv-section {
+    margin-top: 10pt !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .cv-section-title {
+    margin-bottom: 5pt !important;
+    font-size: 8pt !important;
+    letter-spacing: 0.18em !important;
+  }
+
+  /* BODY TEXT */
+  .cv-body {
+    font-size: 9.5pt !important;
+    line-height: 1.4 !important;
+  }
+
+  /* SKILLS — 2 column grid, compact */
+  .cv-root .cv-section .grid {
+    gap: 6pt 14pt !important;
+  }
+  .cv-skill-group {
+    font-size: 7.5pt !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  /* EXPERIENCE / EDUCATION ENTRIES */
+  .cv-entry {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .cv-root .cv-section .space-y-7 > * + * { margin-top: 9pt !important; }
+  .cv-root .cv-section .space-y-4 > * + * { margin-top: 6pt !important; }
+  .cv-root .cv-section .space-y-3 > * + * { margin-top: 5pt !important; }
+
+  .cv-entry h3 {
+    font-size: 10.5pt !important;
+    line-height: 1.2 !important;
+  }
+  .cv-entry .text-violet { font-size: 9pt !important; }
+  .cv-bullets {
+    margin-top: 4pt !important;
+    padding-left: 14pt !important;
+  }
+  .cv-bullets > * + * { margin-top: 2pt !important; }
+  .cv-bullets li {
+    font-size: 9.5pt !important;
+    line-height: 1.35 !important;
+  }
+  .cv-bullets li::marker { color: #6d28d9 !important; }
+
+  @page {
+    size: A4;
+    margin: 10mm 12mm;
+  }
+}
