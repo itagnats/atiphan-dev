@@ -62,7 +62,7 @@ export function Work() {
                     View site&nbsp;→
                   </a>
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex max-w-sm flex-wrap gap-2">
                   {featuredProject.stack.map((tag) => (
                     <span
                       key={tag}

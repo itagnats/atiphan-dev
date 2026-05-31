@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
 /* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes navPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.12); }
+}
+
+.nav-pulse {
+  animation: navPulse 2s ease-in-out infinite;
+}
+/* ============================================================
    THEME TOKENS — ported from mockups/index.html
    ============================================================ */
 :root {
@@ -224,8 +235,8 @@ section { position: relative; z-index: 1; }
     background: #ffffff !important;
     color: #111111 !important;
     overflow: visible !important;
-    font-size: 9.5pt !important;
-    line-height: 1.35 !important;
+    font-size: 8.5pt !important;
+    line-height: 1.25 !important;
   }
   /* Kill all the cosmic decoration */
   body::before { display: none !important; }
@@ -270,48 +281,49 @@ section { position: relative; z-index: 1; }
   /* HEADER — compact */
   .cv-root .cv-header {
     border-color: #d4d4d8 !important;
-    padding-bottom: 0.5rem !important;
+    padding-bottom: 4pt !important;
+    margin-bottom: 0 !important;
   }
   .cv-root .cv-header h1 {
-    font-size: 22pt !important;
+    font-size: 18pt !important;
     line-height: 1 !important;
     margin: 0 !important;
   }
   .cv-root .cv-header > div:first-of-type + div {
-    font-size: 11pt !important;
-    margin-top: 2pt !important;
+    font-size: 9.5pt !important;
+    margin-top: 1pt !important;
   }
   .cv-root .cv-meta {
-    margin-top: 6pt !important;
-    font-size: 8.5pt !important;
-    gap: 4pt 14pt !important;
+    margin-top: 4pt !important;
+    font-size: 7.5pt !important;
+    gap: 2pt 10pt !important;
   }
 
   /* SECTIONS — tighter gaps */
   .cv-section {
-    margin-top: 10pt !important;
+    margin-top: 7pt !important;
     break-inside: avoid;
     page-break-inside: avoid;
   }
   .cv-section-title {
-    margin-bottom: 5pt !important;
-    font-size: 8pt !important;
-    letter-spacing: 0.18em !important;
+    margin-bottom: 3pt !important;
+    font-size: 7pt !important;
+    letter-spacing: 0.15em !important;
   }
 
   /* BODY TEXT */
   .cv-body {
-    font-size: 9.5pt !important;
-    line-height: 1.4 !important;
+    font-size: 8.5pt !important;
+    line-height: 1.3 !important;
   }
 
   /* SKILLS — 2 column grid, compact */
   .cv-root .cv-section .grid {
-    gap: 6pt 14pt !important;
+    gap: 3pt 10pt !important;
   }
   .cv-skill-group {
-    font-size: 7.5pt !important;
-    letter-spacing: 0.16em !important;
+    font-size: 7pt !important;
+    letter-spacing: 0.12em !important;
   }
 
   /* EXPERIENCE / EDUCATION ENTRIES */
@@ -319,28 +331,55 @@ section { position: relative; z-index: 1; }
     break-inside: avoid;
     page-break-inside: avoid;
   }
-  .cv-root .cv-section .space-y-7 > * + * { margin-top: 9pt !important; }
-  .cv-root .cv-section .space-y-4 > * + * { margin-top: 6pt !important; }
-  .cv-root .cv-section .space-y-3 > * + * { margin-top: 5pt !important; }
+  /* Hide timeline decorations (dots, vertical line) */
+  .cv-root .cv-section .relative > div[aria-hidden],
+  .cv-root .cv-section article > span[aria-hidden] {
+    display: none !important;
+  }
+  /* Remove the left padding added for the timeline */
+  .cv-root .cv-section article.cv-entry {
+    padding-left: 0 !important;
+  }
+  /* Remove rounded card borders on education/publication entries */
+  .cv-root .cv-section article.cv-entry.rounded-xl {
+    border: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+  /* Hide decorative skill card borders */
+  .cv-root .cv-section .grid > div.rounded-xl {
+    border: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+  /* Hide section icon and gradient line */
+  .cv-section > div > span[aria-hidden],
+  .cv-section > div > span:last-child {
+    display: none !important;
+  }
+  .cv-root .cv-section .space-y-7 > * + * { margin-top: 6pt !important; }
+  .cv-root .cv-section .space-y-4 > * + * { margin-top: 4pt !important; }
+  .cv-root .cv-section .space-y-3 > * + * { margin-top: 3pt !important; }
+  .cv-root .cv-section .space-y-0 > * + * { margin-top: 6pt !important; }
 
   .cv-entry h3 {
-    font-size: 10.5pt !important;
-    line-height: 1.2 !important;
-  }
-  .cv-entry .text-violet { font-size: 9pt !important; }
-  .cv-bullets {
-    margin-top: 4pt !important;
-    padding-left: 14pt !important;
-  }
-  .cv-bullets > * + * { margin-top: 2pt !important; }
-  .cv-bullets li {
     font-size: 9.5pt !important;
-    line-height: 1.35 !important;
+    line-height: 1.15 !important;
+  }
+  .cv-entry .text-violet { font-size: 8pt !important; }
+  .cv-bullets {
+    margin-top: 2pt !important;
+    padding-left: 12pt !important;
+  }
+  .cv-bullets > * + * { margin-top: 1pt !important; }
+  .cv-bullets li {
+    font-size: 8.5pt !important;
+    line-height: 1.28 !important;
   }
   .cv-bullets li::marker { color: #6d28d9 !important; }
 
   @page {
     size: A4;
-    margin: 10mm 12mm;
+    margin: 8mm 10mm;
   }
 }

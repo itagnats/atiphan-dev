@@ -34,7 +34,7 @@ export function Contact() {
               View CV
             </Link>
 
-            <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2 md:gap-3 md:[grid-template-columns:repeat(2,minmax(220px,260px))]">
+            <div className="grid grid-cols-1 gap-2.5 md:gap-3 md:grid-cols-[repeat(2,minmax(220px,260px))]">
               {contactTiles.map((tile) => {
                 const Icon = TILE_ICONS[tile.icon] ?? Mail;
                 return (

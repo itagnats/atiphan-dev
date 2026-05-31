@@ -48,11 +48,11 @@ export const about = {
 export const featuredProject = {
   tag: "Personal project · Live",
   name: "POCKITA",
-  tagline: "Tagline goes here — edit me",
+  tagline: "Your portfolio, in your pocket.",
   description:
-    "Short description of POCKITA — what it does, who it's for, what makes it interesting. This text is a placeholder; swap it for the real pitch when ready.",
-  liveUrl: "#",
-  stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "OpenAI API"],
+    "Personal investment tracker for Thai users. Tracks crypto, US stocks, ETFs, gold, Thai stocks, mutual funds, bonds, gov savings, plus cash accounts — all in Baht, with optional USD view. Anonymous-first authentication (no email required to start), with optional email-OTP recovery.",
+  liveUrl: "https://pockita.vercel.app/",
+  stack: ["React 18", "Vite 5", "TypeScript 5.6", "Tailwind 3.4", "shadcn/ui", "TanStack Query 5", "Zustand 4", "Supabase", "Recharts", "i18next"],
   phones: [
     {
       type: "home" as const,

@@ -45,7 +45,7 @@ export function Hero() {
               {personal.name}
             </h1>
             <div
-              className="-mt-1 font-[family-name:var(--font-script)] text-[52px] leading-[1] text-violet md:-mt-2 md:text-[72px]"
+              className="-mt-1 font-script text-[52px] leading-none text-violet md:-mt-2 md:text-[72px]"
               aria-hidden
             >
               {personal.lastName}
@@ -94,7 +94,7 @@ export function Hero() {
           </div>
 
           {/* Desktop-only CODE decoration */}
-          <div className="absolute top-20 left-1/2 z-10 hidden -translate-x-[10%] rounded-xl border border-border-soft bg-bg-card px-5 py-4 font-mono text-[11px] text-violet md:block xl:-translate-x-[30%]">
+          <div className="absolute top-20 left-1/2 z-10 hidden translate-x-[-10%] rounded-xl border border-border-soft bg-bg-card px-5 py-4 font-mono text-[11px] text-violet md:block xl:translate-x-[-30%]">
             <div>
               <span className="text-text-muted">&lt;</span>CODE{" "}
               <span className="text-text-muted">/&gt;</span>

@@ -93,7 +93,7 @@ export function Navigation() {
         <button
           onClick={openDialog}
           aria-label="Open astronaut dialog"
-          className="mx-auto mt-1.5 mb-0.5 block size-10 overflow-hidden rounded-full border border-border-strong shadow-[0_0_16px_var(--violet-glow)] transition hover:scale-105 hover:shadow-[0_0_24px_var(--violet-glow)]"
+          className="nav-pulse mx-auto mt-1.5 mb-0.5 block size-10 cursor-pointer overflow-hidden rounded-full border border-border-strong shadow-[0_0_16px_var(--violet-glow)] transition hover:shadow-[0_0_24px_var(--violet-glow)]"
         >
           <Image
             src="/images/avatar.webp"
@@ -134,7 +134,7 @@ export function Navigation() {
                 <button
                   onClick={openDialog}
                   aria-label="Open astronaut dialog"
-                  className="size-15 shrink-0 overflow-hidden rounded-full border border-border-strong transition hover:scale-105"
+                  className="nav-pulse size-15 shrink-0 cursor-pointer overflow-hidden rounded-full border border-border-strong transition hover:scale-105"
                 >
                   <Image
                     src="/images/avatar.webp"
