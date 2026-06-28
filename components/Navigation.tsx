@@ -7,15 +7,15 @@ import {
   User,
   Briefcase,
   Activity,
+  Heart,
   Mail,
   Menu,
   X,
   ChevronRight,
-  Github,
-  Linkedin,
+  // Github, Linkedin — hidden during OYW application, restore alongside the icons below.
   type LucideIcon,
 } from "lucide-react";
-import { navItems, personal } from "@/data/portfolio";
+import { astronautMessages, navItems, personal } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 import { AstronautDialog } from "@/components/AstronautDialog";
 
@@ -24,6 +24,7 @@ const NAV_ICONS: Record<string, LucideIcon> = {
   user: User,
   briefcase: Briefcase,
   activity: Activity,
+  heart: Heart,
   mail: Mail,
 };
 
@@ -31,9 +32,13 @@ export function Navigation() {
   const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [astronautMessage, setAstronautMessage] = useState("");
 
   const openDialog = () => {
     setMenuOpen(false);
+    setAstronautMessage(
+      astronautMessages[Math.floor(Math.random() * astronautMessages.length)],
+    );
     setDialogOpen(true);
   };
 
@@ -148,7 +153,11 @@ export function Navigation() {
                   <div className="font-display text-lg font-medium">{personal.name}</div>
                   <div className="text-xs leading-snug text-text-muted">
                     {personal.role.primary}
-                    <br />× {personal.role.secondary}
+                    {personal.role.secondary && (
+                      <>
+                        <br />× {personal.role.secondary}
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -192,6 +201,7 @@ export function Navigation() {
 
             {/* Socials */}
             <div className="relative z-10 mt-5 flex gap-3 border-t border-border-soft pt-5">
+              {/* GitHub + LinkedIn hidden during OYW application — restore by uncommenting.
               <a
                 href={personal.github}
                 target="_blank"
@@ -210,6 +220,7 @@ export function Navigation() {
               >
                 <Linkedin className="size-4.5" />
               </a>
+              */}
               <a
                 href={`mailto:${personal.email}`}
                 aria-label="Email"
@@ -225,7 +236,12 @@ export function Navigation() {
       {/* ============================================================
           ASTRONAUT DIALOG POPUP (opens on avatar click)
           ============================================================ */}
-      <AstronautDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
+      <AstronautDialog
+        key={astronautMessage}
+        open={dialogOpen}
+        message={astronautMessage}
+        onClose={() => setDialogOpen(false)}
+      />
     </>
   );
 }

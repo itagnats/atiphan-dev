@@ -21,7 +21,7 @@ export function Experience() {
   return (
     <section id="experience" className="relative">
       <div className="mx-auto max-w-7xl px-5 py-14 md:px-16 md:py-16">
-        <SectionHead num="03" label="Experience" />
+        <SectionHead num="02" label="Experience" />
 
         <div className="relative px-0 py-2 md:py-4">
           {/* Timeline line */}
@@ -42,7 +42,10 @@ export function Experience() {
                       strokeWidth={1.6}
                     />
                   </div>
-                  <div className="flex flex-1 flex-col gap-1 pt-1.5 md:flex-none md:pt-0">
+                  <div className="flex flex-1 flex-col items-start gap-1 pt-1.5 md:flex-none md:items-center md:pt-0">
+                    <span className="mb-1.5 inline-flex items-center rounded-full border border-border-strong bg-(--pill-bg) px-2.5 py-0.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-violet md:text-[10px]">
+                      {exp.tag}
+                    </span>
                     <div className="mb-1 font-mono text-xs tracking-tight text-text-muted">
                       {exp.date}
                     </div>

@@ -31,13 +31,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   ),
-  title: "Atiphan Charoenphon — Frontend Developer × Product Designer",
+  title: "Atiphan C.",
   description:
-    "Frontend developer building thoughtful web apps in React and TypeScript. Trained in industrial product design and IT management. Open to opportunities.",
+    "Software developer at the CP Leadership Institute, building human-centered approaches to AI adoption. One Young World 2026 application.",
   openGraph: {
-    title: "Atiphan Charoenphon — Frontend Developer × Product Designer",
+    title: "Atiphan C.",
     description:
-      "Frontend developer building thoughtful web apps in React and TypeScript.",
+      "Software developer at the CP Leadership Institute, building human-centered approaches to AI adoption.",
     images: ["/images/avatar.webp"],
   },
 };

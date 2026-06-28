@@ -54,8 +54,12 @@ export default function CvPage() {
           </h1>
           <div className="mt-3 font-display text-[17px] text-violet md:text-[20px]">
             {personal.role.primary}
-            <span className="mx-2 text-violet/40">×</span>
-            {personal.role.secondary}
+            {personal.role.secondary && (
+              <>
+                <span className="mx-2 text-violet/40">×</span>
+                {personal.role.secondary}
+              </>
+            )}
           </div>
 
           {/* Divider */}

@@ -1,33 +1,25 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
-import { astronautMessages, personal } from "@/data/portfolio";
+import { AnimatePresence, motion } from "motion/react";
+import { personal } from "@/data/portfolio";
 
 interface AstronautDialogProps {
   open: boolean;
+  message: string;
   onClose: () => void;
 }
 
-export function AstronautDialog({ open, onClose }: AstronautDialogProps) {
-  // Pick a random message every time the dialog opens
-  const message = useMemo(() => {
-    if (!open) return "";
-    return astronautMessages[Math.floor(Math.random() * astronautMessages.length)];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
-
+export function AstronautDialog({ open, message, onClose }: AstronautDialogProps) {
   const [displayed, setDisplayed] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(true);
   const timerRef = useRef<number | null>(null);
 
-  // Typewriter effect
+  // Typewriter effect — parent remounts via `key={message}`, so state starts fresh
   useEffect(() => {
-    if (!open || !message) return;
-    setDisplayed("");
-    setIsTyping(true);
+    if (!message) return;
     let i = 0;
     const tick = () => {
       i++;
@@ -42,7 +34,7 @@ export function AstronautDialog({ open, onClose }: AstronautDialogProps) {
     return () => {
       if (timerRef.current) window.clearTimeout(timerRef.current);
     };
-  }, [open, message]);
+  }, [message]);
 
   // Esc to close
   useEffect(() => {

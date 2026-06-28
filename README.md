@@ -56,10 +56,6 @@ mockups/
 
 Almost all text lives in `data/portfolio.ts` — name, role, intro, bio, project descriptions, experience entries, contact links. Edit and save; the dev server hot-reloads.
 
-## Replacing the CV
-
-Drop your PDF at `public/atiphan-cv.pdf` and the "Download CV" button will serve it.
-
 ## Deployment
 
 When ready, deploy to Vercel:

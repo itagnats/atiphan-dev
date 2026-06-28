@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Briefcase, TrendingUp, Box, type LucideIcon } from "lucide-react";
 import { SectionHead } from "@/components/SectionHead";
 import { about } from "@/data/portfolio";
@@ -20,8 +20,9 @@ export function About() {
         <div className="mb-9 grid grid-cols-1 items-center gap-12 md:mb-14">
           <div>
             <h2 className="mb-6 font-display text-[38px] font-bold leading-[1.05] tracking-[-0.03em] md:text-[56px]">
-              {about.headline.line1}
-              <span className="block text-violet">{about.headline.line2}</span>
+              <span className="block text-violet">{about.headline.line1}</span>
+              <span className="block">{about.headline.line2}</span>
+              <span className="block text-violet">{about.headline.line3}</span>
             </h2>
             <div className="max-w-155 space-y-4 text-[14px] leading-[1.7] text-text-muted md:text-[15px]">
               {about.bio.map((p, i) => (
@@ -31,27 +32,28 @@ export function About() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 md:gap-4">
+        <div className="flex flex-wrap gap-2.5 md:gap-3">
           {about.stats.map((stat, i) => {
             const Icon = STAT_ICONS[stat.icon] ?? Box;
             return (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.4, delay: i * 0.08, ease: "easeOut" }}
-                whileHover={{ y: -2 }}
-                className="flex flex-col gap-2.5 rounded-[18px] border border-border-soft bg-bg-card p-4 transition-colors hover:border-border-strong md:gap-3 md:p-6"
+                transition={{ duration: 0.35, delay: i * 0.06, ease: "easeOut" }}
+                className="flex items-center gap-3 rounded-xl border border-border-soft bg-bg-card px-3.5 py-2.5 transition-colors hover:border-border-strong md:px-4 md:py-3"
               >
-                <div className="flex size-9 items-center justify-center rounded-xl border border-border-strong bg-(--pill-bg) text-violet md:size-11">
-                  <Icon className="size-4.5 md:size-5.5" strokeWidth={2} />
+                <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-border-strong bg-(--pill-bg) text-violet md:size-8">
+                  <Icon className="size-3.5 md:size-4" strokeWidth={2} />
                 </div>
-                <div className="font-display text-2xl font-bold leading-none md:text-[32px]">
-                  {stat.value}
-                </div>
-                <div className="text-[11px] text-text-muted md:text-[13px]">
-                  {stat.label}
+                <div className="flex min-w-0 flex-col leading-tight">
+                  <div className="font-display text-[14px] font-semibold md:text-[15px]">
+                    {stat.value}
+                  </div>
+                  <div className="truncate text-[10.5px] text-text-muted md:text-[11.5px]">
+                    {stat.label}
+                  </div>
                 </div>
               </motion.div>
             );

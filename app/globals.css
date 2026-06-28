@@ -378,8 +378,98 @@ section { position: relative; z-index: 1; }
   }
   .cv-bullets li::marker { color: #6d28d9 !important; }
 
+  /* ============================================================
+     ESSAY (/assignments/essay) — white, single-page printable
+     ============================================================ */
+  .essay-root {
+    margin: 0 !important;
+    color: #111111 !important;
+  }
+  .essay-root * {
+    color: inherit !important;
+    background: transparent !important;
+    border-color: #d4d4d8 !important;
+    box-shadow: none !important;
+  }
+  .essay-root .essay-card {
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  .essay-root .essay-title {
+    font-size: 15pt !important;
+    line-height: 1.15 !important;
+    color: #111111 !important;
+    margin: 0 0 3pt 0 !important;
+  }
+  .essay-root .essay-question {
+    font-size: 9pt !important;
+    line-height: 1.35 !important;
+    color: #3f3f46 !important;
+    margin-top: 2pt !important;
+  }
+  /* Tighten the title block bottom margin */
+  .essay-root .essay-card > div:nth-of-type(2) {
+    margin-bottom: 6pt !important;
+  }
+  .essay-root .essay-body {
+    font-size: 9.5pt !important;
+    line-height: 1.38 !important;
+    color: #111111 !important;
+  }
+  .essay-root .essay-body > * + * {
+    margin-top: 4pt !important;
+  }
+  .essay-root .essay-body p {
+    max-width: none !important;
+    text-align: justify;
+    orphans: 3;
+    widows: 3;
+  }
+  .essay-root .essay-quote {
+    max-width: none !important;
+    margin: 5pt 0 !important;
+    padding-left: 7pt !important;
+    border-left: 2pt solid #6d28d9 !important;
+    border-color: #6d28d9 !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
+    color: #6d28d9 !important;
+    font-weight: 500 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  /* Category pill — keep violet accent on paper */
+  .essay-root span[class*="rounded-full"] {
+    color: #6d28d9 !important;
+    border: 1px solid #c4b5fd !important;
+    background: transparent !important;
+    font-size: 7pt !important;
+    padding: 1pt 6pt !important;
+  }
+
+  /* Signature at end of essay / assignment content — plain black */
+  .essay-signature {
+    margin-top: 10pt !important;
+    padding-top: 4pt !important;
+    border-top: 1px solid #d4d4d8 !important;
+    text-align: right;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .essay-signature > div {
+    color: #111111 !important;
+    font-family: var(--font-inter), system-ui, sans-serif !important;
+    font-size: 10.5pt !important;
+    font-weight: 400 !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Hide all screen-only chrome on assignment pages */
+  .assignment-root .no-print { display: none !important; }
+
   @page {
     size: A4;
-    margin: 8mm 10mm;
+    margin: 10mm 12mm;
   }
 }
