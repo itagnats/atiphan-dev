@@ -14,8 +14,8 @@ export function ResumeContent() {
   return (
     <div className="cv-root mt-10 md:mt-14">
       {/* HEADER — name + contact, no role-tagline (the profile carries the message) */}
-      <header className="cv-header relative overflow-hidden rounded-2xl bg-[rgba(120,60,220,0.07)] p-8 pb-9 shadow-[0_0_60px_-20px_rgba(139,92,246,0.25)] md:p-12 md:pb-11 md:pr-48">
-        <div className="mb-5 size-24 overflow-hidden rounded-full border-2 border-violet/30 shadow-[0_0_24px_-4px_var(--violet-glow)] md:absolute md:right-8 md:top-8 md:mb-0 md:size-36">
+      <header className="cv-header relative overflow-hidden rounded-2xl bg-[rgba(120,60,220,0.07)] p-8 pb-9 shadow-[0_0_60px_-20px_rgba(139,92,246,0.25)] md:p-12 md:pb-11">
+        <div className="mb-5 size-24 overflow-hidden rounded-full border-2 border-violet/30 shadow-[0_0_24px_-4px_var(--violet-glow)] md:mb-6 md:size-36">
           <Image
             src="/images/profile.jpg"
             alt={personal.fullName}
