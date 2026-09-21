@@ -6,7 +6,7 @@ export function Leadership() {
   return (
     <section id="leadership" className="relative">
       <div className="mx-auto max-w-7xl px-5 py-14 md:px-16 md:py-16">
-        <SectionHead num="03" label="Leadership / Volunteer" />
+        <SectionHead num="05" label="Leadership" />
         <LeadershipTabs events={leadership} />
       </div>
     </section>

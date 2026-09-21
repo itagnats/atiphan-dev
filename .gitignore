@@ -41,3 +41,19 @@ yarn-error.log*
 next-env.d.ts
 
 .CLAUDE.md
+
+# ---------------------------------------------------------------
+# Raw source media. NEVER commit this folder.
+# It holds the original 225 MB POCKITA screen recording. GitHub rejects any
+# file over 100 MB, so committing it does not just bloat the repo — the push
+# itself fails, and unpicking it from history afterwards is painful.
+# The encoded 615 KB clip that actually ships is public/videos/pockita-demo.mp4
+# and that one IS committed.
+/public/video/
+
+# Working files from Cowork sessions — screenshots, PDF previews, diffs,
+# draft encodes. Useful while working, not part of the site.
+/Claude outputs/
+
+# Editor settings. Delete this line if you'd rather share them.
+/.vscode/

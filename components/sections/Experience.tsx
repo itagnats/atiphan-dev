@@ -21,7 +21,7 @@ export function Experience() {
   return (
     <section id="experience" className="relative">
       <div className="mx-auto max-w-7xl px-5 py-14 md:px-16 md:py-16">
-        <SectionHead num="02" label="Experience" />
+        <SectionHead num="04" label="Experience" />
 
         <div className="relative px-0 py-2 md:py-4">
           {/* Timeline line */}

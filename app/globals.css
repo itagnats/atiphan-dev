@@ -222,7 +222,10 @@ section { position: relative; z-index: 1; }
   background: var(--bg-0);
   border: 8px solid #2a1147;
   border-radius: 38px;
-  padding: 14px 12px;
+  /* Was 14px 12px when the screen was hand-drawn markup. The frame now holds a
+     full-bleed screenshot, so the padding is even and the image is inset just
+     enough to read as a device screen rather than a floating picture. */
+  padding: 8px;
   box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7);
 }
 
@@ -247,6 +250,16 @@ section { position: relative; z-index: 1; }
   nav,
   [aria-label="Open menu"],
   footer { display: none !important; }
+
+  /* The CV page's own wrapper. `min-h-screen` is a screen idea — on paper it
+     forces the block to a full page height, and `overflow: hidden` stops the
+     printer paginating through it. Together they pushed an otherwise
+     one-page CV onto a second sheet. */
+  .cv-page {
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
 
   /* CV root — single-page layout */
   .cv-root {
@@ -281,8 +294,24 @@ section { position: relative; z-index: 1; }
   /* HEADER — compact */
   .cv-root .cv-header {
     border-color: #d4d4d8 !important;
-    padding-bottom: 4pt !important;
+    /* The screen card carries 32px of padding and a 24px-margin divider.
+       On paper that is ~65px of nothing, which was the difference between
+       one A4 sheet and two. */
+    padding: 5pt 8pt 4pt 8pt !important;
     margin-bottom: 0 !important;
+  }
+  /* Photo: 96–128px on screen is far too large on paper. ~20mm is the size a
+     Thai CV photo is normally printed at, and it keeps the header compact. */
+  .cv-root .cv-photo {
+    width: 20mm !important;
+    height: 20mm !important;
+    margin-bottom: 3pt !important;
+    border-width: 1px !important;
+  }
+
+  .cv-root .cv-header .my-6 {
+    margin-top: 3pt !important;
+    margin-bottom: 3pt !important;
   }
   .cv-root .cv-header h1 {
     font-size: 18pt !important;
@@ -299,16 +328,22 @@ section { position: relative; z-index: 1; }
     gap: 2pt 10pt !important;
   }
 
-  /* SECTIONS — tighter gaps */
+  /* SECTIONS — tighter gaps.
+     Deliberately NOT `break-inside: avoid`. A section taller than the space
+     left on the page cannot be kept whole, so the browser moves the entire
+     section to the next page and leaves the remainder of this one blank —
+     with the Experience section that was almost half of page one. Entries
+     are the right granularity to keep together; sections are not. */
   .cv-section {
     margin-top: 7pt !important;
-    break-inside: avoid;
-    page-break-inside: avoid;
   }
   .cv-section-title {
     margin-bottom: 3pt !important;
     font-size: 7pt !important;
     letter-spacing: 0.15em !important;
+    /* Never strand a heading at the foot of a page. */
+    break-after: avoid;
+    page-break-after: avoid;
   }
 
   /* BODY TEXT */
@@ -326,10 +361,24 @@ section { position: relative; z-index: 1; }
     letter-spacing: 0.12em !important;
   }
 
-  /* EXPERIENCE / EDUCATION ENTRIES */
+  /* EXPERIENCE / EDUCATION ENTRIES — these are what must not split. */
   .cv-entry {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+  /* A skills cell and a single bullet are small enough to always keep whole. */
+  .cv-root .cv-section .grid > div {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .cv-bullets li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  /* Never leave one dangling line of a paragraph across the break. */
+  .cv-body {
+    orphans: 2;
+    widows: 2;
   }
   /* Hide timeline decorations (dots, vertical line) */
   .cv-root .cv-section .relative > div[aria-hidden],

@@ -2,36 +2,55 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft, ChevronRight } from "lucide-react";
-import { cpModules } from "@/data/portfolio";
+import { selectedWork } from "@/data/portfolio";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Pre-render all 4 detail pages at build time
-export function generateStaticParams() {
-  return cpModules.map((mod) => ({ slug: mod.slug }));
+/* ============================================================
+   RETAINED BUT DISABLED — 2026-09-21.
+
+   The case-study write-ups were trimmed to overview / outcome / tech, which
+   made a page per module thinner than the card linking to it. Everything moved
+   onto the cards in the Work section (components/WorkModuleGrid.tsx), and these
+   pages were switched off rather than deleted, because the detail is worth
+   adding back once there is enough to say.
+
+   To revive: return `selectedWork.map((mod) => ({ slug: mod.slug }))` below,
+   delete `dynamicParams = false`, restore the "Read more" link in
+   WorkModuleGrid, and put the /work/* entries back in app/sitemap.ts.
+
+   BOTH lines below are load-bearing. Returning [] on its own still lets
+   Next.js render these pages on demand at request time; dynamicParams = false
+   is what turns an unlisted slug into a 404. This mirrors how the One Young
+   World route in app/assignments/[slug] is held open but unreachable.
+   ============================================================ */
+export const dynamicParams = false;
+
+export function generateStaticParams(): { slug: string }[] {
+  return [];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const mod = cpModules.find((m) => m.slug === slug);
+  const mod = selectedWork.find((m) => m.slug === slug);
   if (!mod) return { title: "Not found" };
   const cleanName = mod.name.replace(/\n/g, " ");
   return {
-    title: `${cleanName} — Atiphan`,
+    title: cleanName,
     description: mod.overview,
   };
 }
 
 export default async function WorkDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const mod = cpModules.find((m) => m.slug === slug);
+  const mod = selectedWork.find((m) => m.slug === slug);
   if (!mod) notFound();
 
   // Adjacent modules for the prev/next footer nav
-  const idx = cpModules.findIndex((m) => m.slug === slug);
-  const next = cpModules[(idx + 1) % cpModules.length];
+  const idx = selectedWork.findIndex((m) => m.slug === slug);
+  const next = selectedWork[(idx + 1) % selectedWork.length];
 
   return (
     <main className="relative mx-auto max-w-230 px-5 pb-24 pt-14 md:px-10 md:pt-20">
@@ -85,29 +104,12 @@ export default async function WorkDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* Screenshot placeholders */}
-        <section>
-          <SectionHeading>Screens</SectionHeading>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
-            {mod.screenshots.map((s, i) => (
-              <figure
-                key={i}
-                className="overflow-hidden rounded-2xl border border-border-soft bg-bg-card"
-              >
-                <div
-                  className="aspect-4/3 w-full"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 40% 35%, rgba(168, 85, 247, 0.28), transparent 60%), linear-gradient(135deg, #2a1147, #1a0f2e)",
-                  }}
-                />
-                <figcaption className="px-5 py-3 text-[12.5px] text-text-muted">
-                  {s.caption}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
+        {/* There is deliberately no "Screens" section. It used to render three
+            empty gradient rectangles per module with a caption underneath —
+            placeholders that were never filled in, and which read to a visitor
+            as images that failed to load. The write-up carries the case study
+            on its own. If real screens are ever added, they need to be actual
+            files, and CP Group material will need redacting first. */}
       </div>
 
       {/* Next module */}

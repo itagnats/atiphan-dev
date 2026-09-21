@@ -26,10 +26,13 @@ Next.js 16 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 ·
 
 **Content lives in `data/portfolio.ts`.** Almost every piece of visible text — personal info, featured project (POCKITA), CP Group case studies (`cpModules`), experience timeline, CV body, nav items, contact tiles, astronaut popup messages — is exported from this single file as `as const` literals. Section components import from it; editing copy should not require touching JSX.
 
-**Three routes:**
-- `/` (`app/page.tsx`) — single-page portfolio composing `<Hero />`, `<About />`, `<Work />`, `<Experience />`, `<Contact />`, `<Footer />`, `<Navigation />`. Each section uses an `id` that matches an entry in `navItems` so the scroll-spy works.
+**Four routes (one disabled):**
+- `/` (`app/page.tsx`) — single-page portfolio composing `<Hero />`, `<About />`, `<Work />`, `<Experiments />`, `<Experience />`, `<Leadership />`, `<Contact />`, `<Footer />`, `<Navigation />`. Each section uses an `id` that matches an entry in `navItems` so the scroll-spy works.
 - `/cv` (`app/cv/page.tsx`) — print-optimized resume rendered from `cv` in `data/portfolio.ts`. Driven by the print stylesheet in `app/globals.css` (see below).
 - `/work/[slug]` (`app/work/[slug]/page.tsx`) — dynamic case-study pages. `generateStaticParams` enumerates `cpModules`, so **adding a case study = add an entry to `cpModules`** (slug, name, label, year, overview, problem, solution, outcome, tech, screenshots) and the page + metadata are produced at build.
+- `/assignments/[slug]` — **disabled, do not re-enable casually.** Built for the One Young World 2026 application; rolled back 2026-09-01. `generateStaticParams` returns `[]` **and** `export const dynamicParams = false`, so every request 404s. Both are load-bearing: with the App Router default (`dynamicParams = true`), returning `[]` alone still lets Next.js server-render these pages on demand, leaving the essay, resume and pitch video publicly reachable by direct URL. The files stay on disk so the pages can be revived.
+
+**Section numbering.** `SectionHead num` runs in page order and must stay in sync with `navItems`: About `01`, Work `02`, Interactive Experiments `03`, Experience `04`, Leadership `05`, Contact `06`. Inserting a section means renumbering everything after it — `app/__tests__/page-structure.test.tsx` fails if the numbers skip or the nav and sections drift apart.
 
 **Client vs server components.** Page/section components are server components by default. Files that need state, effects, or browser APIs are marked `"use client"` at the top: `Navigation` (IntersectionObserver scroll-spy + mobile menu), `PhoneCarousel`, `AstronautDialog`, `PrintButton`. Don't add `"use client"` to a file that doesn't need it.
 
@@ -37,7 +40,7 @@ Next.js 16 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 ·
 
 **Fonts.** Loaded via `next/font/google` in `app/layout.tsx` and exposed as CSS variables on `<html>`: Inter (`--font-inter`, sans body), Space Grotesk (`--font-space-grotesk`, display), JetBrains Mono (`--font-jetbrains-mono`, mono), Sacramento (`--font-sacramento`, script accent).
 
-**Print pipeline for `/cv`.** A large `@media print` block in `app/globals.css` is what makes the CV print to a single A4 page. It hooks on class names — `cv-root`, `cv-header`, `cv-section`, `cv-section-title`, `cv-body`, `cv-entry`, `cv-bullets`, `cv-skill-group`, `cv-meta`, plus `no-print` to hide elements on paper. When editing the CV page, preserve these class hooks; otherwise the printed PDF will break. The `PrintButton` triggers `window.print()`; users save as PDF from the print dialog.
+**Print pipeline for `/cv`.** A large `@media print` block in `app/globals.css` controls how the CV prints to A4. It currently runs to **two pages** — measured at ~1191px of content against ~1123px of A4 printable height after the Selected Projects section was added on 2026-09-15. It was one page before that. If you add to the CV, re-measure rather than assuming. It hooks on class names — `cv-root`, `cv-header`, `cv-section`, `cv-section-title`, `cv-body`, `cv-entry`, `cv-bullets`, `cv-skill-group`, `cv-meta`, plus `no-print` to hide elements on paper. When editing the CV page, preserve these class hooks; otherwise the printed PDF will break. The `PrintButton` triggers `window.print()`; users save as PDF from the print dialog.
 
 **Utility.** `lib/utils.ts` exports `cn(...inputs)` = `twMerge(clsx(...))`. Use this for any conditional / merged class strings.
 
@@ -47,4 +50,7 @@ Next.js 16 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 ·
 - New tokens → add to `:root` *and* `@theme inline` in `app/globals.css`.
 - New case study → append to `cpModules` (slug must be URL-safe; it becomes the route).
 - Section `id` on the `<section>` must match the entry in `navItems` for scroll-spy to track it.
+- Adding or reordering a section → renumber every `SectionHead num` after it and update `navItems`.
+- Retained-but-disabled OYW material (`app/assignments/`, `components/ResumeContent.tsx`, `components/VideoContent.tsx`, `data/essay.md`, the `assignments` / `oywResume` exports, `assets/oyw-video.mp4`) is intentionally dead code. Leave it alone unless explicitly asked to revive it; do not "clean it up".
+- Never put files intended to stay private into `public/` — anything there is served over HTTP by direct URL regardless of what the UI links to.
 - Prefer server components; reach for `"use client"` only when state / effects / browser APIs are required.

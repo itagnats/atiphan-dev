@@ -16,6 +16,14 @@ export function AstronautDialog({ open, message, onClose }: AstronautDialogProps
   const [displayed, setDisplayed] = useState("");
   const [isTyping, setIsTyping] = useState(true);
   const timerRef = useRef<number | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  /* Move focus into the dialog when it opens. It can appear unprompted on a
+     first visit, and a keyboard or screen-reader user left focused on the page
+     behind it has no obvious way out. Close is the safest landing spot. */
+  useEffect(() => {
+    if (open) closeRef.current?.focus();
+  }, [open]);
 
   // Typewriter effect — parent remounts via `key={message}`, so state starts fresh
   useEffect(() => {
@@ -76,10 +84,18 @@ export function AstronautDialog({ open, message, onClose }: AstronautDialogProps
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             onClick={handleDialogClick}
+            /* Without role/aria-modal a screen reader announces this as an
+               anonymous group and keeps reading the page behind it. It opens
+               by itself on a first visit, so the label has to say who is
+               talking — an unannounced dialog is a jarring arrival. */
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Message from ${personal.name}`}
             className="relative flex w-full max-w-160 cursor-pointer flex-col overflow-hidden rounded-3xl border border-border-strong bg-[rgba(15,8,28,0.96)] md:flex-row"
           >
             {/* Close button */}
             <button
+              ref={closeRef}
               onClick={(e) => {
                 e.stopPropagation();
                 onClose();

@@ -1,9 +1,15 @@
 import { personal } from "@/data/portfolio";
 
 /**
- * 30-second OYW pitch video. Drop the file at `public/oyw-video.mp4`
- * (any extension works; just match the src below). Until then, the
- * player shows a broken-media state — replace with a real file to fix.
+ * 30-second One Young World pitch video.
+ *
+ * RETAINED BUT DISABLED, along with the /assignments route that renders it.
+ * The video file itself was moved out of `public/` to `assets/oyw-video.mp4`
+ * so it is no longer served over HTTP or shipped in the deploy bundle.
+ *
+ * To re-enable: move `assets/oyw-video.mp4` back into `public/`, restore
+ * generateStaticParams in app/assignments/[slug]/page.tsx, and drop the
+ * dynamicParams export there.
  */
 const VIDEO_SRC = "/oyw-video.mp4";
 

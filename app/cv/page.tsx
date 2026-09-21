@@ -1,20 +1,21 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Mail, Phone, Linkedin, Github, MapPin } from "lucide-react";
 import type { Metadata } from "next";
-import { PrintButton } from "@/components/PrintButton";
+import { DownloadCvButton } from "@/components/DownloadCvButton";
 import { personal, cv } from "@/data/portfolio";
 
 export const metadata: Metadata = {
-  title: "CV — Atiphan Charoenphon",
+  title: "CV",
   description:
-    "Resume / CV for Atiphan Charoenphon — Frontend Developer × Product Designer.",
+    "Resume / CV for Atiphan Charoenphon — Software Developer, Bangkok. Frontend, API integration and system flow.",
 };
 
 export default function CvPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#07040f]">
+    <div className="cv-page relative min-h-screen overflow-hidden bg-[#07040f]">
       {/* Star field */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
+      <div aria-hidden className="no-print pointer-events-none fixed inset-0 z-0">
         {/* Static star dots via box-shadow trick using pseudo-like spans */}
         <span className="absolute inset-0 bg-[radial-gradient(1px_1px_at_10%_15%,rgba(255,255,255,0.55)_0%,transparent_100%),radial-gradient(1px_1px_at_25%_40%,rgba(255,255,255,0.4)_0%,transparent_100%),radial-gradient(1.5px_1.5px_at_40%_8%,rgba(255,255,255,0.6)_0%,transparent_100%),radial-gradient(1px_1px_at_55%_30%,rgba(255,255,255,0.35)_0%,transparent_100%),radial-gradient(1px_1px_at_70%_55%,rgba(255,255,255,0.5)_0%,transparent_100%),radial-gradient(1.5px_1.5px_at_80%_12%,rgba(255,255,255,0.65)_0%,transparent_100%),radial-gradient(1px_1px_at_90%_70%,rgba(255,255,255,0.4)_0%,transparent_100%),radial-gradient(1px_1px_at_15%_75%,rgba(255,255,255,0.45)_0%,transparent_100%),radial-gradient(1px_1px_at_35%_90%,rgba(255,255,255,0.3)_0%,transparent_100%),radial-gradient(1.5px_1.5px_at_60%_80%,rgba(255,255,255,0.55)_0%,transparent_100%),radial-gradient(1px_1px_at_5%_50%,rgba(255,255,255,0.4)_0%,transparent_100%),radial-gradient(1px_1px_at_48%_60%,rgba(255,255,255,0.3)_0%,transparent_100%),radial-gradient(1px_1px_at_75%_35%,rgba(255,255,255,0.45)_0%,transparent_100%),radial-gradient(1px_1px_at_92%_20%,rgba(255,255,255,0.5)_0%,transparent_100%),radial-gradient(1.5px_1.5px_at_20%_25%,rgba(255,255,255,0.35)_0%,transparent_100%)]" />
         {/* Nebula glows */}
@@ -34,7 +35,7 @@ export default function CvPage() {
             <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" strokeWidth={2.5} />
             Back to site
           </Link>
-          <PrintButton />
+          <DownloadCvButton />
         </div>
 
         {/* HEADER */}
@@ -46,20 +47,25 @@ export default function CvPage() {
             <span className="size-1 rounded-full bg-violet" />
           </span>
 
-          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-violet/60 mb-3">
-            ✦ Curriculum Vitae
+          {/* Photo — Thai CVs conventionally carry one. Same treatment as the
+              OYW resume: circular, violet ring. Sized down for print by the
+              .cv-photo rule in globals.css. */}
+          <div className="cv-photo mb-5 size-24 overflow-hidden rounded-full border-2 border-violet/30 shadow-[0_0_24px_-4px_var(--violet-glow)] md:mb-6 md:size-32">
+            <Image
+              src="/images/profile.jpg"
+              alt={personal.fullName}
+              width={144}
+              height={144}
+              priority
+              className="size-full object-cover"
+            />
           </div>
+
           <h1 className="font-display text-[40px] font-bold leading-none tracking-[-0.02em] text-white md:text-[56px]">
             {personal.fullName}
           </h1>
           <div className="mt-3 font-display text-[17px] text-violet md:text-[20px]">
-            {personal.role.primary}
-            {personal.role.secondary && (
-              <>
-                <span className="mx-2 text-violet/40">×</span>
-                {personal.role.secondary}
-              </>
-            )}
+            {cv.headline}
           </div>
 
           {/* Divider */}
@@ -139,6 +145,40 @@ export default function CvPage() {
                     </li>
                   ))}
                 </ul>
+              </article>
+            ))}
+          </div>
+        </CvSection>
+
+        {/* PROJECTS */}
+        <CvSection title="Selected Projects" icon="◈">
+          <div className="space-y-4">
+            {cv.projects.map((proj) => (
+              <article key={proj.name} className="cv-entry rounded-xl border border-border-soft bg-[rgba(120,60,220,0.04)] px-5 py-4">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h3 className="font-display text-[15px] font-semibold text-white md:text-[16px]">
+                    {proj.name}
+                    <span className="ml-2 text-[12.5px] font-normal text-violet">{proj.tagline}</span>
+                  </h3>
+                  <a
+                    href={proj.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-[10px] tracking-[0.08em] text-violet/60 transition hover:text-violet"
+                  >
+                    {proj.urlLabel}
+                  </a>
+                </div>
+                <ul className="cv-bullets mt-2 space-y-1.5 pl-4">
+                  {proj.bullets.map((b, i) => (
+                    <li key={i} className="cv-body relative list-none text-[13px] leading-[1.65] text-text-muted before:absolute before:-left-4 before:top-[0.55em] before:size-1 before:rounded-full before:bg-violet/40 before:content-['']">
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+                <div className="cv-body mt-2 text-[12px] leading-[1.6] text-violet/70">
+                  {proj.tech.join(" · ")}
+                </div>
               </article>
             ))}
           </div>

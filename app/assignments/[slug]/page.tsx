@@ -56,8 +56,30 @@ const ASSIGNMENT_ICONS: Record<string, LucideIcon> = {
   "pen-line": PenLine,
 };
 
-export function generateStaticParams() {
-  return assignments.map((a) => ({ slug: a.slug }));
+/**
+ * ROUTE DISABLED.
+ *
+ * These pages were built for the One Young World 2026 application and
+ * expose the full essay, the OYW-tailored resume and the pitch video.
+ * The application is over, so the route is switched off rather than
+ * merely unlinked:
+ *
+ *   - generateStaticParams returns [] → nothing is prerendered.
+ *   - dynamicParams = false          → any /assignments/* request 404s
+ *                                      instead of being rendered on demand.
+ *
+ * Both lines are required. Returning [] alone is NOT enough: with the
+ * App Router default (dynamicParams = true) Next.js would still
+ * server-render these pages on request, leaving them publicly reachable.
+ *
+ * To bring the pages back: restore the original body of
+ * generateStaticParams and delete the dynamicParams export.
+ */
+export const dynamicParams = false;
+
+export function generateStaticParams(): { slug: string }[] {
+  return [];
+  // Original: return assignments.map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -84,7 +106,7 @@ export default async function AssignmentDetailPage({ params }: PageProps) {
     <main className="assignment-root relative mx-auto max-w-230 px-5 pb-24 pt-14 md:px-10 md:pt-20">
       {/* Back link */}
       <Link
-        href="/#contact"
+        href="/"
         className="no-print group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted transition hover:text-violet"
       >
         <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" strokeWidth={2.5} />

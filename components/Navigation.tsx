@@ -8,16 +8,22 @@ import {
   Briefcase,
   Activity,
   Heart,
+  Sparkles,
   Mail,
   Menu,
   X,
   ChevronRight,
-  // Github, Linkedin — hidden during OYW application, restore alongside the icons below.
+  Github,
+  Linkedin,
   type LucideIcon,
 } from "lucide-react";
 import { astronautMessages, navItems, personal } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 import { AstronautDialog } from "@/components/AstronautDialog";
+
+/* Bumping the version suffix re-greets everyone, which is what you want if the
+   introduction text changes materially. */
+const GREETED_KEY = "ita-dev:astronaut-greeted-v1";
 
 const NAV_ICONS: Record<string, LucideIcon> = {
   home: Home,
@@ -25,6 +31,7 @@ const NAV_ICONS: Record<string, LucideIcon> = {
   briefcase: Briefcase,
   activity: Activity,
   heart: Heart,
+  sparkles: Sparkles,
   mail: Mail,
 };
 
@@ -41,6 +48,42 @@ export function Navigation() {
     );
     setDialogOpen(true);
   };
+
+  /* First-visit greeting. The astronaut introduction is the site's opening
+     line, and behind a small avatar button most visitors never found it — so
+     it opens itself once, then never again.
+
+     astronautMessages[0] specifically, not a random one: a first-time visitor
+     should get the introduction, not a mid-conversation aside.
+
+     The 1400ms delay lets the hero settle first; a dialog that lands on top of
+     a still-animating page reads as an error rather than a welcome.
+
+     localStorage is per-browser, so this repeats on a new device or after the
+     visitor clears site data. That is the right trade — the alternative is a
+     cookie and a consent banner for a hello. Both accessors are wrapped
+     because Safari's private mode throws rather than returning null. */
+  useEffect(() => {
+    let alreadyGreeted = false;
+    try {
+      alreadyGreeted = window.localStorage.getItem(GREETED_KEY) === "1";
+    } catch {
+      /* Storage unavailable — greet them. An extra hello beats a crash. */
+    }
+    if (alreadyGreeted) return;
+
+    const timer = window.setTimeout(() => {
+      setAstronautMessage(astronautMessages[0]);
+      setDialogOpen(true);
+      try {
+        window.localStorage.setItem(GREETED_KEY, "1");
+      } catch {
+        /* Not persisted; they get greeted again next visit. */
+      }
+    }, 1400);
+
+    return () => window.clearTimeout(timer);
+  }, []);
 
   // Scroll-spy with IntersectionObserver
   useEffect(() => {
@@ -201,7 +244,6 @@ export function Navigation() {
 
             {/* Socials */}
             <div className="relative z-10 mt-5 flex gap-3 border-t border-border-soft pt-5">
-              {/* GitHub + LinkedIn hidden during OYW application — restore by uncommenting.
               <a
                 href={personal.github}
                 target="_blank"
@@ -220,7 +262,6 @@ export function Navigation() {
               >
                 <Linkedin className="size-4.5" />
               </a>
-              */}
               <a
                 href={`mailto:${personal.email}`}
                 aria-label="Email"
