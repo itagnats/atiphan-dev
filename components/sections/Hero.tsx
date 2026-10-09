@@ -84,7 +84,7 @@ export function Hero() {
                   title={s.name}
                   className="flex size-9.5 items-center justify-center rounded-[10px] border border-border-soft bg-bg-card text-text-muted transition hover:border-border-strong"
                 >
-                  <BrandIcon slug={s.slug} className="size-4.5" />
+                  <BrandIcon slug={s.slug} label={s.name} className="size-4.5" />
                 </div>
               ))}
             </div>

@@ -90,8 +90,21 @@ Software Developer with 3+ years of experience, frontend-focused across React an
 **Testing & Quality** — Jest · Vitest · React Testing Library · Scenario testing · SonarQube · Checkmarx (SAST)
 **Tooling** — Git · GitLab · Vercel · VS Code
 **Integration & Design** — SAP REST · Qsoft DMS · Supabase · Figma · Information architecture · UX research
-**Data & Analysis** — Power BI · Python (pandas) · In-product reporting and dashboards · Data Analyst Level 4 (TPQI)
-**Languages** — Thai (native) · English (professional working)
+**Data & Analysis** — Power BI · Python (pandas) · In-product reporting and dashboards · Data Analyst L4 (depa / GBDi)
+
+> Two different Data Analyst credentials exist and must not be merged into one
+> line, which is a mistake both the site and an earlier PDF made:
+>
+> - **Data Analyst L4** — Certificate of Completion (course and examination),
+>   issued by depa / GBDi / Mahidol University, 14 July 2023. Verified against
+>   the certificate, ID 5B5UDG-CE000080. This is the L4.
+> - **TPQI professional qualification**, December 2021 — a separate award from
+>   the Thailand Professional Qualification Institute. Its level is NOT
+>   confirmed; do not state one until the certificate has been checked.
+>
+> The Certificates & Training section should list the depa / GBDi L4; it is
+> currently missing from it.
+**Languages** — Thai (native) · English (professional working) · IELTS 6.5 overall
 
 ## EXPERIENCE
 

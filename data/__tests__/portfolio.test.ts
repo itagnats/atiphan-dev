@@ -142,6 +142,13 @@ describe("personal", () => {
   it("keeps the profile handles consistent with their URLs", () => {
     expect(personal.linkedin).toContain(personal.linkedinHandle.split("/").pop()!);
     expect(personal.github).toContain(personal.githubHandle.split("/").pop()!);
+    // The handle is what a reader types from a printed CV, so a drift between
+    // the two means someone lands on the wrong page or nowhere at all.
+    expect(personal.website).toContain(personal.websiteHandle);
+  });
+
+  it("gives the site a real https URL", () => {
+    expect(personal.website).toMatch(/^https:\/\//);
   });
 });
 
@@ -211,12 +218,19 @@ describe("hero stack", () => {
     }
   });
 
-  it("has a brand mark wired for every stack entry", async () => {
+  it("has a mark wired for every stack entry", async () => {
+    // simple-icons only ships brand marks, so a concept like REST has no entry
+    // there and uses a generic Lucide glyph instead. Either source is fine; a
+    // slug in neither renders an empty box with a tooltip and nothing in it.
     const si = await import("simple-icons");
+    const { GENERIC_SLUGS } = await import("@/components/BrandIcon");
+
     for (const item of stack) {
       const exportName =
         "si" + item.slug.charAt(0).toUpperCase() + item.slug.slice(1);
-      expect(si, `${item.name} (${exportName})`).toHaveProperty(exportName);
+      const hasMark =
+        Object.hasOwn(si, exportName) || GENERIC_SLUGS.includes(item.slug);
+      expect(hasMark, `${item.name} has neither ${exportName} nor a generic glyph`).toBe(true);
     }
   });
 });

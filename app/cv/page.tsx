@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Mail, Phone, Linkedin, Github, MapPin } from "lucide-react";
+import { ArrowLeft, Mail, Phone, Linkedin, Github, MapPin, Globe } from "lucide-react";
 import type { Metadata } from "next";
 import { DownloadCvButton } from "@/components/DownloadCvButton";
 import { personal, cv } from "@/data/portfolio";
@@ -83,6 +83,10 @@ export default function CvPage() {
             <a href={`tel:${personal.phoneRaw}`} className="inline-flex items-center gap-1.5 transition hover:text-violet">
               <Phone className="size-3.5 text-violet/60" strokeWidth={2} />
               {personal.phone}
+            </a>
+            <a href={personal.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition hover:text-violet">
+              <Globe className="size-3.5 text-violet/60" strokeWidth={2} />
+              {personal.websiteHandle}
             </a>
             <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition hover:text-violet">
               <Linkedin className="size-3.5 text-violet/60" strokeWidth={2} />

@@ -24,13 +24,25 @@ const events = [
     detail: "Detail about the second event.",
     photos: [{ caption: "Placeholder caption" }],
   },
+  {
+    slug: "third-event",
+    tabLabel: "Third",
+    topic: "Global program",
+    projectName: "Third Project",
+    organization: "Org Three",
+    date: "2026",
+    detail: "Detail about the third event.",
+    // One Young World has no photos — it was an essay, a video and a prototype.
+    photos: [],
+    press: { url: "https://example.com/coverage", label: "News coverage" },
+  },
 ];
 
 describe("LeadershipTabs", () => {
   it("renders a tab per event and opens on the first", () => {
     render(<LeadershipTabs events={events} />);
 
-    expect(screen.getAllByRole("button")).toHaveLength(2);
+    expect(screen.getAllByRole("button")).toHaveLength(3);
     expect(screen.getByText("First Project")).toBeInTheDocument();
     expect(screen.queryByText("Second Project")).not.toBeInTheDocument();
   });
@@ -49,6 +61,33 @@ describe("LeadershipTabs", () => {
   it("shows the photo caption as alt text so the carousel is described", async () => {
     render(<LeadershipTabs events={events} />);
     expect(screen.getByAltText("First photo")).toBeInTheDocument();
+  });
+
+  it("drops the carousel entirely for an event with no photos", async () => {
+    const user = userEvent.setup();
+    render(<LeadershipTabs events={events} />);
+
+    await user.click(screen.getByRole("button", { name: "Third" }));
+
+    // An empty carousel renders as a blank frame taking half the row — worse
+    // than no carousel at all. The write-up should take the full width.
+    expect(screen.getByText("Detail about the third event.")).toBeInTheDocument();
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /previous|next/i })).not.toBeInTheDocument();
+  });
+
+  it("links press coverage in a new tab, safely, and only where there is any", async () => {
+    const user = userEvent.setup();
+    render(<LeadershipTabs events={events} />);
+
+    // The first event has no press link; nothing should be rendered for it.
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Third" }));
+    const link = screen.getByRole("link", { name: /news coverage/i });
+    expect(link).toHaveAttribute("href", "https://example.com/coverage");
+    // Outbound link on someone else's site — rel must block reverse-tabnabbing.
+    expect(link.getAttribute("rel") ?? "").toContain("noopener");
   });
 
   it("renders nothing rather than crashing when given no events", () => {

@@ -13,6 +13,10 @@ interface LeadershipEvent {
   date: string;
   detail: string;
   photos: ReadonlyArray<{ src?: string; caption: string }>;
+  /** Third-party coverage of the event. Independent reporting carries more
+   *  weight than a self-hosted photo, and avoids republishing images the
+   *  broadcaster owns. */
+  press?: { url: string; label: string };
 }
 
 interface LeadershipTabsProps {
@@ -60,8 +64,13 @@ export function LeadershipTabs({ events }: LeadershipTabsProps) {
       </div>
 
       {/* Body: carousel + text */}
-      <div className="relative z-10 grid grid-cols-1 items-start gap-7 md:grid-cols-[1.15fr_1fr] md:gap-10">
-        <PhotoCarousel photos={active.photos} />
+      <div
+        className={cn(
+          "relative z-10 grid grid-cols-1 items-start gap-7 md:gap-10",
+          active.photos.length > 0 && "md:grid-cols-[1.15fr_1fr]",
+        )}
+      >
+        {active.photos.length > 0 && <PhotoCarousel photos={active.photos} />}
 
         <div className="flex flex-col">
           <span className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-border-strong bg-(--pill-bg) px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-violet">
@@ -85,6 +94,17 @@ export function LeadershipTabs({ events }: LeadershipTabsProps) {
           <p className="max-w-95 text-[14px] leading-[1.7] text-text-muted md:text-[15px]">
             {active.detail}
           </p>
+          {active.press && (
+            <a
+              href={active.press.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex w-fit items-center gap-2 rounded-full border border-border-strong bg-(--pill-bg) px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-violet transition hover:border-violet hover:text-[#c084fc]"
+            >
+              {active.press.label}
+              <span aria-hidden>&rarr;</span>
+            </a>
+          )}
         </div>
       </div>
     </article>

@@ -22,6 +22,12 @@ export const personal = {
   linkedinHandle: "linkedin.com/in/atiphan-charoenphon-a0630b243",
   github: "https://github.com/itagnats",
   githubHandle: "github.com/itagnats",
+  /* The portfolio itself. On a CV this is the strongest single link — the only
+     one that shows the work rather than listing it — so it sits above LinkedIn
+     and GitHub in the contact row on /cv. The pre-generated PDF in public/
+     already carries it; this adds it to the web version. */
+  website: "https://atiphan-dev.vercel.app",
+  websiteHandle: "atiphan-dev.vercel.app",
 } as const;
 
 /* Hero stack row. `slug` is a simple-icons slug — the mark is drawn from the
@@ -33,6 +39,11 @@ export const stack = [
   { name: "TypeScript", slug: "typescript" },
   { name: "Tailwind CSS", slug: "tailwindcss" },
   { name: "Figma", slug: "figma" },
+  /* Not a brand, so there is no simple-icons mark for it — BrandIcon falls back
+     to a generic Lucide glyph for any slug not in its ICONS map. Listed here
+     because API integration is a real part of the job the stack row is meant to
+     advertise, not just a library choice. */
+  { name: "RESTful API", slug: "rest" },
 ] as const;
 
 export const about = {
@@ -309,6 +320,40 @@ export const experience = [
    ============================================================ */
 export const leadership = [
   {
+    slug: "one-young-world-2026",
+    tabLabel: "One Young World '26",
+    topic: "Global program",
+    projectName: "One Young World 2026",
+    organization: "CP Group · Cape Town delegation",
+    date: "2026",
+    /* Deliberately stops at "final selection round". That is accurate and
+       strong on its own, and it does not imply the trip happened — Ita did not
+       pass the final panel interview and did not go to Cape Town. Do not let a
+       later edit round this up to "represented CP Group at One Young World". */
+    detail:
+      "Built ChoomChon AI (CP LocalAI Connect), an AI platform for Thai OTOP and community enterprises — ten agents covering stock, cost, sales, packaging, marketing and sustainability, paired with a \"Local First\" retail model placing community products into 7-Eleven, Lotus's and Makro province by province, on an 18-month roadmap from an Ayutthaya pilot to 100 communities. ChoomChon AI won the One Young World Thailand Future Sustain Hack Bootcamp, which carried me through to the final selection round for CP Group's One Young World 2026 delegation to Cape Town.",
+    photos: [
+      {
+        src: "/images/leadership/one-young-world-2026/01.webp",
+        caption:
+          "Participants of the One Young World Thailand Future Sustain Hack Bootcamp holding their certificates at the CP Group selection event, Bangkok. Photo: One Young World Thailand / CP Group.",
+      },
+      {
+        src: "/images/leadership/one-young-world-2026/02.webp",
+        caption:
+          "Certificates presented on stage at the bootcamp, under the One Young World Thailand Future Sustain Hack Bootcamp banner. Still from TNN News coverage of CP Group's One Young World 2026 selection.",
+      },
+    ] as ReadonlyArray<{ src?: string; caption: string }>,
+    /* TNN News covered the bootcamp and CP's One Young World 2026 selection.
+       Linked rather than screenshotted: the footage is TNN's, and a news report
+       is better evidence than a photo we would be republishing without rights.
+       It also keeps ~40 other people's faces off this site. */
+    press: {
+      url: "https://youtu.be/NoeL1qndpf0",
+      label: "TNN News coverage",
+    },
+  },
+  {
     slug: "cp-exponential-surge-2025",
     tabLabel: "Exponential Surge ’25",
     topic: "Company program",
@@ -553,8 +598,8 @@ export const cv = {
     "Testing & Quality": ["Jest", "Vitest", "React Testing Library", "Scenario testing", "SonarQube", "Checkmarx (SAST)"],
     Tooling: ["Git", "GitLab", "Vercel", "VS Code"],
     "Integration & Design": ["SAP REST", "Qsoft DMS", "Supabase", "Figma", "Information architecture", "UX research"],
-    "Data & Analysis": ["Power BI", "Python (pandas)", "In-product reporting and dashboards", "Data Analyst Level 4 (TPQI)"],
-    Languages: ["Thai (native)", "English (professional working)"],
+    "Data & Analysis": ["Power BI", "Python (pandas)", "In-product reporting and dashboards", "Data Analyst L4 (depa / GBDi)"],
+    Languages: ["Thai (native)", "English (professional working)", "IELTS 6.5 overall"],
   },
   experience: [
     {
