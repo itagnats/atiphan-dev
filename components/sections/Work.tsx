@@ -1,7 +1,7 @@
 import { SectionHead } from "@/components/SectionHead";
 import { PhoneVideo } from "@/components/PhoneVideo";
 import { WorkModuleGrid } from "@/components/WorkModuleGrid";
-import { featuredProject, primeProject } from "@/data/portfolio";
+import { featuredProject, selectedWorkContext } from "@/data/portfolio";
 
 export function Work() {
   return (
@@ -63,13 +63,18 @@ export function Work() {
             </article>
           </div>
 
-          {/* Selected Work — the five PRIME modules.
-              This block used to read "Selected Work at CP Group" over four
-              employer case studies. Those were replaced on 2026-09-21 by PRIME,
-              which is a personal project. The provenance line below is not
-              decoration: without it the heading implies employer work, and a
-              side project presented as a job is the kind of thing that comes
-              apart in an interview. Do not remove it. */}
+          {/* Selected Work — the CP Group modules.
+
+              This block has swung twice. It held four CP case studies until
+              2026-09-21, then five PRIME cards, and on 2026-10-11 it came back
+              to CP: PRIME is undeployed with no public repo, so a reader
+              cannot open any of it, while this work shipped and is in use.
+
+              The provenance pill below is not decoration. These are an
+              employer's internal systems, and the "Internal systems" note is
+              what explains the absence of screenshots and links before a
+              reader wonders why a portfolio has neither. Do not remove either,
+              and do not add a screenshot to these cards. */}
           <div>
             <div className="mb-5">
               <h3 className="font-display text-[26px] font-bold leading-none tracking-[-0.03em] md:text-[40px]">
@@ -79,33 +84,21 @@ export function Work() {
               <div className="mt-4 flex flex-wrap items-center gap-2.5">
                 <span className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-(--pill-bg) px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-violet">
                   <span className="size-1.5 rounded-full bg-violet shadow-[0_0_8px_var(--violet)]" />
-                  {primeProject.provenance}
+                  {selectedWorkContext.provenance}
                 </span>
-                {!primeProject.deployed && (
+                {selectedWorkContext.internal && (
                   <span className="rounded-full border border-border-soft px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-text-dim">
-                    Not deployed
+                    Internal systems — no public links
                   </span>
                 )}
               </div>
 
               <h4 className="mt-4 font-display text-[20px] font-semibold tracking-tight md:text-[24px]">
-                {primeProject.name}
-                <span className="ml-2.5 font-normal text-violet">{primeProject.tagline}</span>
+                {selectedWorkContext.name}
+                <span className="ml-2.5 font-normal text-violet">{selectedWorkContext.tagline}</span>
               </h4>
               <p className="mt-2 max-w-180 text-[14px] leading-[1.7] text-text-muted">
-                {primeProject.blurb}{" "}
-                {/* Rendered only when the repo is public — a dead link on a
-                    portfolio is worse than no link. */}
-                {primeProject.repoUrl && (
-                  <a
-                    href={primeProject.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="whitespace-nowrap border-b border-transparent font-medium text-violet transition hover:border-current hover:text-[#c084fc]"
-                  >
-                    View source&nbsp;→
-                  </a>
-                )}
+                {selectedWorkContext.blurb}
               </p>
             </div>
 

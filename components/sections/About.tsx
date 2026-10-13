@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { Briefcase, TrendingUp, Box, type LucideIcon } from "lucide-react";
 import { SectionHead } from "@/components/SectionHead";
+import { ProcessFlow } from "@/components/ProcessFlow";
 import { about } from "@/data/portfolio";
 
 const STAT_ICONS: Record<string, LucideIcon> = {
@@ -59,6 +60,8 @@ export function About() {
             );
           })}
         </div>
+
+        <ProcessFlow />
       </div>
     </section>
   );

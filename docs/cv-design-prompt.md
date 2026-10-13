@@ -1,11 +1,29 @@
 # Prompt — build my CV as an editable design
 
-Copy everything below the line into Claude Design (or any Claude session with
-the `design` skill). It carries your real content verbatim, so nothing has to
-be invented or remembered.
+Copy everything below the first `---` into Claude Design (or any Claude session
+with the `design` skill). It carries real content verbatim, so nothing has to be
+invented or remembered.
 
-Generated 2026-09-20 from `data/portfolio.ts`. **If you edit the CV data on the
-site, update this file too, or the two will drift.**
+Regenerated **2026-10-11** from `data/portfolio.ts`. **If you edit the CV data on
+the site, update this file too, or the two will drift.** They had drifted badly
+before this rewrite: the migration content existed only as a margin note, the
+summary and bullets were the pre-migration versions, and the shipped PDF carried
+a headline and a stack that appeared in neither.
+
+## What changed on 2026-10-11, and why
+
+- The **ERP migration now leads the CP entry as real bullets**, not as an
+  editorial note buried in the skills block where a generator would skip it.
+- **Headline** is now `Software Developer | Business Analyst | Project Manager`,
+  matching the three "Open to" pills on the site header.
+- **Date of birth removed, nationality kept.** Date of birth earns nothing and
+  the PDF is published on a public site.
+- **ASP.NET Razor (.cshtml), Bootstrap and shadcn/ui restored** to the stack.
+- **Certificates & Training added** — it was missing entirely, including the
+  depa / GBDi L4 that a note in the old file said belonged there.
+- All editorial instructions moved out of the CONTENT block. Anything the
+  designer must not do is now in "Boundaries" below, where it cannot be mistaken
+  for text to typeset.
 
 ---
 
@@ -37,7 +55,7 @@ Clean, print-first, restrained. White background, near-black body text
 - Dates, section labels and URLs: **JetBrains Mono**, uppercase for labels with
   wide letter-spacing (~0.15em) at ~7 pt.
 - Hairline rules in `#d4d4d8` only where they genuinely separate things. No
-  boxes, no shading, no icons beyond small contact glyphs, no photo.
+  boxes, no shading, no icons beyond small contact glyphs.
 - Section labels are small mono uppercase (SUMMARY, SKILLS, EXPERIENCE…), not
   large headings — the content should dominate, not the furniture.
 
@@ -62,7 +80,7 @@ organisation in violet underneath, then bullets.
 **Selected Projects** — same shape as Experience, with the project name and a
 short tagline on one line, the URL right-aligned, bullets, then a tech line.
 
-**Education and Publications** — compact, two or three lines each.
+**Education, Certificates and Publications** — compact, two or three lines each.
 
 ---
 
@@ -73,37 +91,24 @@ short tagline on one line, the URL right-aligned, bullets, then a tech line.
 [circular photo, ~20 mm]
 
 **Atiphan Charoenphon**
-Software Developer / Business Analyst
+Software Developer | Business Analyst | Project Manager
 
-atiphan.ch@gmail.com · +66 61 393 3559 · Bangkok
-linkedin.com/in/atiphan-charoenphon-a0630b243 · github.com/itagnats
+atiphan.ch@gmail.com · +66 61 393 3559 · Bangkok, Thailand · Thai nationality
+atiphan-dev.vercel.app · linkedin.com/in/atiphan-charoenphon-a0630b243 · github.com/itagnats
 
 ## SUMMARY
 
-Software Developer with 3+ years of experience, frontend-focused across React and TypeScript, with strong experience in business analysis, UX, and cross-functional delivery. At CP Group, I translate business requirements into production applications, owning features across workflow design, UX/UI, frontend development, API integration, testing, and release. I have owned internal modules serving 200–1,500 employees across CP Group business divisions and regularly collaborate with users, business stakeholders, and vendors to define and refine system requirements. I also own contributions to a shared, brand-customized design system and reusable component architecture. My background in industrial product design and an M.Sc. in IT Management gives me a user- and product-oriented perspective that bridges business and engineering.
+Software Developer with 3+ years of experience spanning business and system analysis, frontend engineering, and end-to-end delivery. At CP Group I contributed to the migration of an internal ERP from Mendix to Next.js and C# across ten modules, analysing over 100 existing workflows and mapping legacy data into the new schema. I translate business requirements into production applications, owning features across workflow design, UX/UI, frontend development, API integration, testing, and release. I have owned internal modules serving 200–1,500 employees across CP Group business divisions and regularly collaborate with users, business stakeholders, and vendors to define and refine system requirements. I also own contributions to a shared, brand-customized design system and reusable component architecture. My background in industrial product design and an M.Sc. in IT Management gives me a user- and product-oriented perspective that bridges business and engineering.
 
 ## SKILLS
 
-**Core** — TypeScript · JavaScript (ES6+) · React · Next.js (App Router) · HTML · CSS
-**Styling & Motion** — Tailwind CSS · Motion / Framer Motion · Responsive design
+**Core** — TypeScript · JavaScript (ES6+) · React · Next.js (App Router) · HTML · CSS · ASP.NET Razor (.cshtml)
+**Styling & Motion** — Tailwind CSS · Bootstrap · shadcn/ui · Motion / Framer Motion · Responsive design
 **State, Forms & Data** — TanStack Query · Zustand · React Hook Form · Zod · REST APIs
 **Testing & Quality** — Jest · Vitest · React Testing Library · Scenario testing · SonarQube · Checkmarx (SAST)
 **Tooling** — Git · GitLab · Vercel · VS Code
 **Integration & Design** — SAP REST · Qsoft DMS · Supabase · Figma · Information architecture · UX research
-**Data & Analysis** — Power BI · Python (pandas) · In-product reporting and dashboards · Data Analyst L4 (depa / GBDi)
-
-> Two different Data Analyst credentials exist and must not be merged into one
-> line, which is a mistake both the site and an earlier PDF made:
->
-> - **Data Analyst L4** — Certificate of Completion (course and examination),
->   issued by depa / GBDi / Mahidol University, 14 July 2023. Verified against
->   the certificate, ID 5B5UDG-CE000080. This is the L4.
-> - **TPQI professional qualification**, December 2021 — a separate award from
->   the Thailand Professional Qualification Institute. Its level is NOT
->   confirmed; do not state one until the certificate has been checked.
->
-> The Certificates & Training section should list the depa / GBDi L4; it is
-> currently missing from it.
+**Data & Analysis** — Power BI · Python (pandas) · In-product reporting and dashboards
 **Languages** — Thai (native) · English (professional working) · IELTS 6.5 overall
 
 ## EXPERIENCE
@@ -111,13 +116,14 @@ Software Developer with 3+ years of experience, frontend-focused across React an
 ### Software Development and Testing — CP Leadership Institute, Bangkok
 Jul 2023 – Present
 
+- Contributed to the migration of CP Group's internal ERP from Mendix to Next.js and C# across ten modules — Course, Cost Sheet & Allocation, Quotation, Biography, Enrollment, Invitation, Seat Reservation, Invoice & Credit Note, Login/Account/Role Permission, and PMS Evaluation — analysing over 100 existing workflows and business rules and translating legacy behaviour into the new system.
+- Mapped legacy data onto the new schema for Master Data and Invoice across more than 20 table relations, working through old-to-new schema mapping so migrated behaviour matched the business rules it replaced.
+- Tracked milestones and deliverables and raised delivery risks as they surfaced, took part in cutover planning and post-migration fixes, and demonstrated the PMS Evaluation module end to end to stakeholders while reviewing adjacent modules.
 - Own frontend development across four internal business modules serving 200–1,500 users across CP Group business divisions, working across requirements, UX/UI, frontend architecture, API integration, testing, and delivery.
-- Translate business requirements into system workflows and user experiences, working directly with users, business stakeholders, and external vendors to clarify requirements, resolve edge cases, and align implementation with business processes.
-- Re-architected the PMS evaluation form engine to support dynamic role assignment and evaluation workflows, removing weeks of manual setup per evaluation cycle and enabling role-based evaluation across participants.
+- Owned the full design of the PMS Evaluation module, and of the smaller Biography module. Re-architected the PMS evaluation form engine to support dynamic role assignment and evaluation workflows, removing weeks of manual setup per evaluation cycle and enabling role-based evaluation across participants.
 - Designed and developed the Quotation Module end to end, including UX, information architecture, and frontend implementation, reducing quotation turnaround from 2–3 days to under 4 hours.
 - Developed a bilingual Thai/English, multi-currency Invoice & Credit Note module with live FX rates and direct SAP REST integration, enabling international entities to generate documents within the system.
 - Contributed to the shared frontend design system, proposing and adapting shadcn/ui into a brand-specific component system with reusable components, semantic design tokens, responsive patterns, and light/dark themes used across modules.
-- Review UX, frontend architecture, and implementation quality across adjacent modules, identifying usability and technical issues and working with developers to improve consistency and maintainability.
 - Support release quality through functional testing, unit testing, security/code-quality remediation, and test-case development, including structured test coverage across the modules owned by the team.
 
 ### Store Layout Designer — TD Tawandang Co., Ltd. (Carabao Group), Bangkok
@@ -153,6 +159,19 @@ GPA 4.00, First-Class Honors
 **B.Tech. Industrial Product Design** — Rajamangala University of Technology Rattanakosin · 2020
 GPA 3.61, Second-Class Honors
 
+## CERTIFICATES & TRAINING
+
+**Data Analyst Level 4** — depa / GBDi / Mahidol University · Jul 2023
+Certificate of Completion (course and examination)
+
+**Data Analyst** — Thailand Professional Qualification Institute (TPQI) · Dec 2021
+
+**Cloud Essentials+** — CompTIA · Dec 2021
+
+**Full Stack Engineer Bootcamp** — CODESTAR · Apr – May 2023
+
+**TF-SCALE Engineering Programme** — Nanyang Polytechnic × Temasek Foundation, Singapore · Nov 2018 – Mar 2019
+
 ## PUBLICATIONS
 
 **Transformer Models for Cyberbullying Detection**
@@ -166,7 +185,48 @@ TIMES-iCON 2024 (IEEE) · Co-author · 2024
    the words do not come through, the export has rasterised and I cannot use
    it — fix that before anything else.
 2. Confirm it is exactly two A4 pages.
-3. Confirm no job, degree or publication is split across the page break, and no
-   section heading sits alone at the foot of a page.
-4. Check nothing has been paraphrased. Every figure — 200–1,500 users, 2–3 days
-   to under 4 hours, GPA 4.00 — must read exactly as given above.
+3. Confirm no job, degree, certificate or publication is split across the page
+   break, and no section heading sits alone at the foot of a page.
+4. Check nothing has been paraphrased. Every figure — ten modules, over 100
+   workflows, 20+ table relations, 200–1,500 users, 2–3 days to under 4 hours,
+   GPA 4.00 — must read exactly as given above.
+5. Confirm the two Data Analyst entries are still two separate lines and that
+   no level has been attached to the TPQI one.
+
+---
+
+# Boundaries — for the designer, not for the page
+
+These are constraints on what may be written. None of this text goes into the
+CV.
+
+**The ERP migration leads the CP Leadership Institute entry and must survive any
+trimming.** If the document runs long, cut from the bottom of that bullet list,
+never from the top.
+
+**Claims that must not be inflated:**
+
+- Risks were **identified and raised as they surfaced**, not formally
+  documented. Do not write "maintained a risk register" or similar.
+- The cutover was **participated in**, not run or led.
+- Demonstrations were **to stakeholders**. Do not upgrade to "led the UAT" or
+  "ran acceptance".
+- No ERD, SRS, user story or acceptance-criteria claims — none of those
+  artefacts were produced, and an interviewer will ask to see them.
+- "Contributed to the migration" is deliberate. Do not promote it to "led" or
+  "drove".
+
+**Two separate Data Analyst credentials exist and must not be merged:**
+
+- **Data Analyst Level 4** — Certificate of Completion (course and
+  examination), depa / GBDi / Mahidol University, 14 July 2023. Verified against
+  the certificate itself, ID 5B5UDG-CE000080. This is the L4.
+- **TPQI professional qualification**, December 2021 — a separate award from the
+  Thailand Professional Qualification Institute. **Its level is not confirmed.**
+  State no level until the certificate has been checked. An earlier version of
+  the site and an earlier PDF both merged these into one line; that was wrong.
+
+**Personal data:** nationality is included because Thai employers screen on
+work authorisation. Date of birth is deliberately omitted — this PDF is
+published on a public website. Do not add it back, and do not add marital
+status, religion or a national ID number, whatever a Thai CV template suggests.

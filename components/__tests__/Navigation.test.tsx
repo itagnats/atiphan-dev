@@ -92,8 +92,16 @@ describe("Navigation — first-visit greeting", () => {
 
     const dialog = await screen.findByRole("dialog", {}, { timeout: 4000 });
     expect(dialog).toBeInTheDocument();
-    // It is the introduction, not a random line from the rotation.
-    expect(astronautMessages[0]).toMatch(/welcome aboard/i);
+    // It is the introduction, not a random line from the rotation. Asserted on
+    // the rendered text rather than on the data, so rewording the greeting does
+    // not need a test edit but swapping which message greets does.
+    //
+    // The click skips the typewriter — at 28ms a character the full line takes
+    // about ten seconds, which is the component working correctly and a test
+    // that times out.
+    const user = userEvent.setup();
+    await user.click(dialog);
+    expect(dialog).toHaveTextContent(astronautMessages[0]);
   });
 
   it("does not greet a returning visitor", async () => {

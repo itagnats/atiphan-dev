@@ -47,7 +47,8 @@ components/
   Footer.tsx
   AstronautDialog.tsx      ← Avatar dialog; opens itself once on a first visit
   PhoneVideo.tsx           ← POCKITA screen recording in the phone frame
-  WorkModuleGrid.tsx       ← The five PRIME cards; each expands in place
+  WorkModuleGrid.tsx       ← The six CP Group module cards; each expands in place
+  ProcessFlow.tsx          ← The eight-stage "How I work, end to end" flow in About
   ExperimentGrid.tsx       ← Poster grid linking out to the live experiments
   PhotoCarousel.tsx        ← Leadership event photos
   LeadershipTabs.tsx       ← Tabbed leadership timeline
@@ -56,14 +57,13 @@ components/
   sections/
     Hero.tsx
     About.tsx
-    Work.tsx               ← Featured POCKITA + the Selected Work (PRIME) block
+    Work.tsx               ← Featured POCKITA + the Selected Work (CP Group) block
     Experiments.tsx
     Experience.tsx
     Leadership.tsx
     Contact.tsx
-  UNUSED — nothing imports these; see "Dead code" below:
-    PhoneCarousel.tsx, ExperimentTabs.tsx, PrintButton.tsx,
-    ResumeContent.tsx, VideoContent.tsx
+  Reached only from the disabled OYW route; see "Dead code" below:
+    PrintButton.tsx, ResumeContent.tsx, VideoContent.tsx
 data/
   portfolio.ts             ← ALL CONTENT — edit this file to update text
   essay.md                 ← OYW essay source (used only by the disabled route)
@@ -114,20 +114,68 @@ padding both come out of the declared 260×520, leaving 228×488. **Change the
 frame's size, border or padding in `globals.css` and the clip needs
 re-encoding**, or `object-cover` starts clipping the edges.
 
-**Selected Work — PRIME.** Five cards driven by `selectedWork` in
-`data/portfolio.ts`, each expanding in place. These describe **PRIME, a personal
-side project** — not employer work. They replaced four CP Group case studies on
-2026-09-21.
+**Selected Work — CP Group modules.** Six cards driven by `selectedWork` in
+`data/portfolio.ts`, each expanding in place.
 
-> The provenance badge above the cards ("Personal project · Solo build") is
-> load-bearing, not decoration. Without it the heading reads as employer work.
-> Two tests in `data/__tests__/portfolio.test.ts` enforce this: one fails if the
-> copy ever mentions CP Group or "our team", another if it claims active users.
-> PRIME has a seeded demo dataset and no production traffic, so every figure in
-> those write-ups is a seed count, a test count or a measured distribution.
+This block has swung twice, and the reasoning matters more than the current
+state:
 
-A card with `wide: true` spans both grid columns. Only the design-system card
-uses it.
+| Date | Contents | Why |
+|---|---|---|
+| until 2026-09-21 | Four CP Group case studies | — |
+| 2026-09-21 | Five PRIME cards | Employer internals should not be published |
+| 2026-10-12 | Six CP Group cards | PRIME is undeployed with no public repo, so a reader cannot open any of it; the CP work shipped and is in use |
+
+> `selectedWorkContext` above the cards is load-bearing. It carries the
+> provenance pill ("Employer work · CP Leadership Institute · 2023–present")
+> and, via `internal: true`, the "Internal systems — no public links" note that
+> explains why a portfolio section has no screenshots and no URLs. Without
+> that note the absence reads as an omission.
+
+What the swing back does **not** license, enforced by tests:
+
+- **No links, no screenshots.** A test fails if any `http://`, `https://`,
+  `screenshot`, `.local` or `intranet` string appears in the copy.
+- **No unsourced figures.** The 2023-era copy claimed "~400 monthly active
+  users by month 3", "1-2 days vs 2-3 weeks" and "up to 5 simultaneous role
+  types". None could be traced to anything confirmed, so none were carried
+  over and a test fails if they return.
+- **No inflation.** The migration was *contributed to*, the cutover
+  *participated in*, risks *raised as they surfaced*. A test fails on "led the
+  migration", "ran the cutover", "drove the migration" or "risk register".
+
+PRIME itself is now an interview talking point only — it is on neither the site
+nor the CV. Its five write-ups survive at `git show 0fddcdc:data/portfolio.ts`.
+
+The cards are a single full-width column at every width, as of 2026-10-13.
+There used to be a two-column grid and a `wide: true` flag for cards that
+spanned both; both are gone. Full-width cards cap their running text near 75
+characters, because a line the full width of the page is harder to read — which
+is what the two-column layout had been hiding.
+
+## The About section
+
+Under the headline ("Design-led, engineering-minded, AI-augmented") sits
+`ProcessFlow`, an eight-stage account of how Ita works end to end, driven by the
+`process` export in `data/portfolio.ts`.
+
+It lives inside About rather than in a section of its own because the headline
+is a claim and this is the evidence — and because a new top-level section would
+renumber every `SectionHead` below it.
+
+Each stage carries an `icon` (named lucide imports in a map, so the bundler
+ships eight icons rather than the whole set) and an `ai` line saying what the AI
+actually did at that stage.
+
+> The `ai` lines are the sensitive part. Every one is phrased as assistance that
+> was directed and checked by a person, never as something the tool guaranteed.
+> A test fails if any of them contains "automatically ensures", "guarantees",
+> "proves" or "fully automated". The distinction is what an interviewer will
+> probe, and the one a rewrite tends to quietly erase.
+>
+> Stage 06 said "roughly 560 buttons" until 2026-10-12. That figure arrived
+> second-hand and was never traced to a count anyone had run, so it now reads
+> "hundreds of permission-gated actions". Do not put a number back without one.
 
 ## Switched-off routes
 
@@ -157,18 +205,22 @@ unlisted slug into a 404.
 
 ## Dead code
 
-These files compile and are typechecked, but nothing imports them:
+`PhoneCarousel.tsx` and `ExperimentTabs.tsx` were deleted on 2026-10-12. They
+were genuinely unreferenced, and are recoverable from git history.
 
-| File | Why it is still here |
+What is left is **not** dead, whatever an earlier version of this file said:
+
+| File | Status |
 |---|---|
-| `components/PhoneCarousel.tsx` | Replaced by `PhoneVideo`. Still the only consumer of `featuredProject.phones`. |
-| `components/ExperimentTabs.tsx` | Replaced by `ExperimentGrid`. The only importer of `PhoneCarousel`. |
-| `components/PrintButton.tsx` | Replaced by `DownloadCvButton`. |
-| `ResumeContent.tsx`, `VideoContent.tsx` | Used only by the disabled OYW route. |
-| `featuredProject.phones` in `data/portfolio.ts` | The 12 retired POCKITA screenshots, plus the files in `public/images/pockita/`. |
+| `components/PrintButton.tsx` | **Imported** by `app/assignments/[slug]/page.tsx`. |
+| `components/ResumeContent.tsx` | **Imported** by `app/assignments/[slug]/page.tsx`. |
+| `components/VideoContent.tsx` | **Imported** by `app/assignments/[slug]/page.tsx`. |
+| `featuredProject.phones` in `data/portfolio.ts` | Nothing reads it. Kept because it is the last record of the 12 retired POCKITA stills in `public/images/pockita/`. |
 
-The first two and the `phones` array are one unit — delete all three together or
-none, or the build breaks.
+The OYW route is *unreachable*, but its file still compiles and is typechecked,
+so deleting any of those three breaks `tsc`. This was tried on 2026-10-12 and
+the typecheck caught it. Check with `grep` before believing a "dead code" list,
+including this one.
 
 ## The CV PDF
 
@@ -181,6 +233,13 @@ everyone.
 The current PDF came from a separate design pass (see `docs/cv-design-prompt.md`),
 not from the `/cv` print stylesheet. It is a two-page A4 document whose text
 extracts cleanly, which is what ATS parsers need.
+
+> **The prompt and the PDF drift apart, and it has bitten twice.** On
+> 2026-10-11 the prompt still carried the pre-migration summary and bullets
+> while `data/portfolio.ts` had moved on; the rebuilt prompt fixed that. The
+> PDF generated from it then came back with a **Leadership** section the prompt
+> never asked for. Whenever the PDF changes, fold the change back into
+> `docs/cv-design-prompt.md`, or the next regeneration silently drops it.
 
 The print stylesheet in `app/globals.css` still works if you would rather
 regenerate from the page:
@@ -208,19 +267,21 @@ The suite guards the things TypeScript cannot:
 
 - every `navItems` entry has a matching `<section id>`, and `SectionHead`
   numbers stay consecutive in rendered page order
-- `selectedWork` slugs are unique and URL-safe
-- the PRIME write-ups never claim employer attribution or production users
-- `primeProject.repoUrl` is either empty or a well-formed GitHub URL — an empty
-  string renders no link, which is the honest state while the repo is private
+- `selectedWork` slugs are unique and URL-safe, and every card has the content
+  an expanded card renders
+- the CP write-ups carry no links or screenshots, state none of the three
+  unsourced figures, and never inflate "contributed" into "led"
+- `selectedWorkContext` names the employer and keeps `internal: true` set
+- the process-flow `ai` lines never claim the tool did the judging
+- leadership photo captions are descriptive — they are also the alt text
 - the POCKITA video points at a real `.mp4` and carries a descriptive label
 - the Work cards expand, collapse, and link nowhere (a stray `/work/...` link
   would now 404)
 - the first-visit greeting fires once, then never again
 - no placeholder text ("edit me", "goes here", "lorem") survives into the CV data
 
-One test in `data/__tests__/portfolio.test.ts` is deliberately skipped: it
-asserts leadership photo captions are more descriptive than "Photo 1". Unskip it
-once real captions are written — the caption is also the image's alt text.
+No tests are skipped. The caption test was unskipped on 2026-10-12 once all
+fifteen leadership captions were written from the images themselves.
 
 ## Editing content
 

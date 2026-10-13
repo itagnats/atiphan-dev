@@ -14,6 +14,7 @@ export const personal = {
   intro:
     "Software developer at the CP Leadership Institute. I believe technology should adapt to humans, not force humans to imitate technology — and I’m building tools that help people grow with AI without losing what makes them human.",
   status: "Open to opportunities",
+  openTo: ["Software Developer", "Project Manager", "Business Analyst"],
   location: "Bangkok",
   email: "atiphan.ch@gmail.com",
   phone: "+66 61 393 3559",
@@ -46,15 +47,98 @@ export const stack = [
   { name: "RESTful API", slug: "rest" },
 ] as const;
 
+/* How Ita works, end to end — rendered inside the About section, directly under
+   the headline. It sits there on purpose: the headline makes a claim about how
+   he works and this is the evidence for it.
+
+   `ai` is what the AI actually did at that stage, never a badge. Every line is
+   phrased as assistance Ita directed and checked, because that is what happened
+   and because the alternative invites an interviewer to ask whether he could do
+   it without the tool. In particular: enumerating frontend actions SUPPORTED a
+   permission review — it did not prove the permissions correct. Do not let
+   that phrasing drift.
+
+   Stage 06 said "roughly 560 buttons" until 2026-10-12. The figure arrived
+   second-hand and was never traced to a count anyone had run, so it is now
+   "hundreds of permission-gated actions". Do not put a number back without
+   one. */
+export const process = [
+  {
+    step: "01",
+    icon: "search" as const,
+    title: "Understand the requirements",
+    detail:
+      "Work with users, stakeholders and vendors to clarify what is needed and find the gaps — including reading the legacy system's own workflows and business rules where one already exists.",
+    ai: "Summarising meeting notes, organising requirements, breaking work down and classifying priorities.",
+  },
+  {
+    step: "02",
+    icon: "workflow" as const,
+    title: "Model the solution",
+    detail:
+      "Translate business rules into system and data flows, and map legacy data onto the new schema.",
+    ai: "Drafting candidate workflows and data structures, which I then review against the real requirements and system constraints.",
+  },
+  {
+    step: "03",
+    icon: "pen-tool" as const,
+    title: "Design the experience",
+    detail:
+      "Build on the shared brand design system, shaping UX and information architecture around the decisions a user actually has to make.",
+    ai: "Generating UX/UI alternatives and interactive demos, refined against the established design standards.",
+  },
+  {
+    step: "04",
+    icon: "blocks" as const,
+    title: "Establish engineering standards",
+    detail:
+      "Reusable project workflows for scaffolding, data-table architecture, BFF patterns, commit review, unit-test coverage and module-specific conventions.",
+    ai: "Built as Claude Code skills, so a convention is applied the same way every time instead of being re-explained per task.",
+  },
+  {
+    step: "05",
+    icon: "code" as const,
+    title: "Build and integrate",
+    detail:
+      "Frontend features and API integrations implemented against those standards and shared components, so modules stay consistent with each other.",
+    ai: "Module-specific guidance drawn from the project's own documentation.",
+  },
+  {
+    step: "06",
+    icon: "clipboard-check" as const,
+    title: "Validate the workflow",
+    detail:
+      "Test scenarios drawn from the business process, business-rule verification, and an implementation-quality audit before manual review.",
+    ai: "Generating scenarios, and enumerating frontend actions to support a systematic review of role-based permissions across hundreds of permission-gated actions.",
+  },
+  {
+    step: "07",
+    icon: "shield-check" as const,
+    title: "Coordinate release quality",
+    detail:
+      "Code-quality and security checks moved into the development workflow — SonarQube rules and pre-commit scanning surface reliability and security issues earlier.",
+    ai: "Findings triaged before release; which ones matter is still my call.",
+  },
+  {
+    step: "08",
+    icon: "line-chart" as const,
+    title: "Track, fix and improve",
+    detail:
+      "Lightweight dashboards to track UAT test cases, watch outstanding issues and prioritise fixes.",
+    ai: "Post-release findings fed back into the standards so the same problem does not resurface.",
+  },
+] as const;
+
 export const about = {
   headline: {
     line1: "Design-led,",
     line2: "engineering-minded,",
-    line3: "human-centered.",
+    line3: "AI-augmented.",
   },
   bio: [
-    "I'm a software developer at the CP Leadership Institute. I work on the tools the company's current and future leaders actually use day-to-day — and I treat each module as a chance to ask how AI should fit into someone's working life, not the other way around.",
-    "My background is unusual: a B.Tech in industrial product design before an M.Sc. in IT management. That mix is why I look at software the way I do — every screen is shaped by a person on the other side of it, and the best ones adapt to the person, not the reverse.",
+    "I'm a software developer at the CP Leadership Institute, working where frontend engineering, business analysis, UX and delivery meet. Most of what I do starts before any code: reading the system that already runs, and finding the real problem behind what was asked for.",
+    "My background is unusual — a B.Tech in industrial product design before an M.Sc. in IT management — and it is why I work this way. Every screen has a person on the other side of it, and the best ones adapt to the person rather than the reverse.",
+    "I use AI across that whole process: analysis, design exploration, implementation standards, test coverage and release checks. The workflows are ones I built and validated myself, and the technical decisions stay mine.",
   ],
   stats: [
     { value: "3+", label: "Years Experience", icon: "briefcase" as const },
@@ -91,9 +175,10 @@ export const featuredProject = {
      carousel can be restored in one line, and because the case study may want
      stills later. The files are still in public/images/pockita/.
 
-     Nothing on the site reads this any more: PhoneCarousel falls back to it, but
-     PhoneCarousel is now only reached from ExperimentTabs, which is itself
-     unused. Delete all three together or none of them. */
+     Nothing reads this any more. PhoneCarousel and ExperimentTabs, the two
+     components that did, were deleted on 2026-10-12. This data stayed because
+     the stills themselves are still useful; it is the only thing left of that
+     path, so deleting it loses them. */
   phones: [
     {
       src: "/images/pockita/pokita4.jpg",
@@ -118,37 +203,52 @@ export const featuredProject = {
   ],
 } as const;
 
-/* Header copy for the Selected Work block. `repoUrl` is empty until the PRIME
-   repository is public — the UI renders no link while it is, rather than
-   shipping a dead one. `deployed` stays false until there is a working URL;
-   the badge reads from it, so the page cannot quietly claim more than is true. */
-export const primeProject = {
-  name: "PRIME",
-  tagline: "University ERP",
+/* The Selected Work block header. Renamed from `primeProject` on 2026-10-11,
+   when the five PRIME cards were replaced by the CP Group modules they were
+   originally built to stand in for. PRIME came out because it has never been
+   deployed and has no public repository, so nothing in it can be opened by a
+   reader; the CP work is real, shipped and in daily use, and that is worth
+   more on a portfolio than a side project no one can click. */
+export const selectedWorkContext = {
+  name: "CP Leadership Institute",
+  tagline: "Internal platforms · CP Group",
   blurb:
-    "A university management system I designed and built solo — curriculum, enrollment, cost and invoicing, and a 360° evaluation model. The dataset is seeded and fictional; the reasoning behind each decision is the point.",
-  provenance: "Personal project · Solo build · 2026",
-  deployed: false,
-  repoUrl: "",
+    "Modules I own or co-own inside CP Group's internal systems, serving 200–1,500 employees across the group's business divisions. These are internal tools, so there are no screenshots and no links — what follows is the problem each one solved and what changed because of it.",
+  provenance: "Employer work · CP Leadership Institute · 2023–present",
+  /* Internal systems. No live URLs, no repository, no screenshots — the copy
+     has to carry the work on its own, and the UI must not imply otherwise. */
+  internal: true,
 } as const;
 
 /* ============================================================
-   SELECTED WORK — PRIME (2026-09-21)
+   SELECTED WORK — CP Group modules (2026-10-11)
 
-   These five modules are PRIME, Ita's own university-ERP side project, and
-   they REPLACED four CP Group employer case studies that used to live here
-   (Quotation Module, PMS Evaluation Dynamic Roles, Enrollment & Auditorium
-   Reservation, Invoice & Credit Note). The CP originals cannot be shown
-   publicly; PRIME was built to rebuild those patterns in a context that can.
+   History, because this block has now swung twice and the reasoning matters
+   more than the current state:
 
-   Provenance matters here and the UI must keep saying so. PRIME is a solo
-   personal project with a seeded demo dataset and no production users. Every
-   figure below is a seed count, a test count or a measured distribution — not
-   usage. Do not let "users" language creep into this copy, and do not move
-   these cards back under a CP Group heading.
+   - Until 2026-09-21 these were four CP Group case studies.
+   - On 2026-09-21 they were replaced by five PRIME modules, on the view that
+     employer internals should not be published.
+   - On 2026-10-11 Ita reversed that: PRIME is not deployed and has no public
+     repo, so it cannot be opened by a reader, while the CP work is real and
+     shipped. He also decided the outcome figures can be stated publicly.
 
-   `wide: true` makes a card span both grid columns. Reserved for the design
-   system, which describes work cutting across all the others.
+   What that decision does NOT license:
+
+   - No screenshots, no internal URLs, no customer or employee names, no
+     pricing data, no internal process detail beyond what a module's purpose
+     requires. `internal: true` above is what the UI reads to keep links off.
+   - Every figure here must be one Ita has confirmed. The 2023-era copy
+     carried "~400 monthly active users by month 3", "1-2 days vs 2-3 weeks"
+     and "supports up to 5 simultaneous role types"; none could be sourced, so
+     none were carried over. Do not reinstate a number without asking him.
+   - "Contributed to" and "co-own" are deliberate where they appear. The
+     migration was contributed to, not led; the cutover was participated in,
+     not run; risks were raised as they surfaced, not tracked in a register.
+
+   The cards are a single full-width column as of 2026-10-13. There used to be
+   a `wide: true` flag for cards spanning both columns of a two-column grid;
+   it is gone from the type and the data along with the grid.
 
    `overview`, `outcome` and `tech` are what an expanded card shows.
    `problem`, `solution` and `role` are not rendered anywhere right now; they
@@ -160,110 +260,127 @@ export const selectedWork: ReadonlyArray<{
   label: string;
   description: string;
   role: string;
-  icon: "book" | "receipt" | "users" | "clipboard" | "palette";
+  icon: "book" | "receipt" | "users" | "clipboard" | "palette" | "workflow";
   year: string;
   overview: string;
   problem: string;
   solution: string;
   outcome: string;
   tech: readonly string[];
-  wide?: boolean;
 }> = [
   {
-    slug: "course-and-program",
-    name: "Course and Program",
-    label: "Domain modeling · Architecture",
+    slug: "erp-migration",
+    name: "ERP Migration\nMendix to Next.js and C#",
+    label: "System analysis · Migration",
     description:
-      "A two-level curriculum — programs, their per-semester terms, and the courses inside them — where the thing a student joins is the term.",
-    role: "Solo — every product and architecture decision",
-    icon: "book",
-    year: "2026",
+      "Ten modules moved off a low-code platform, starting from the workflows the old system was already running.",
+    role: "Contributor — workflow analysis, data mapping, module demos",
+    icon: "workflow",
+    year: "2024–present",
     overview:
-      "Academic staff build and maintain the curriculum here: a program holds terms, a term holds a course list and a price, and everything downstream — enrollment, cost, invoicing — reads from it. Seeded at 5 programs, 19 terms, 30 courses and 4 semesters carrying 635 program memberships. No real users; this is a demo dataset, not production traffic.",
+      "CP Group's internal ERP ran on Mendix. The replacement is Next.js and C#, covering ten modules: Course, Cost Sheet & Allocation, Quotation, Biography, Enrollment, Invitation, Seat Reservation, Invoice & Credit Note, Login/Account/Role Permission, and PMS Evaluation.",
     problem:
-      "A course list is not a curriculum. Without a level that holds a course set and a price together, there was nothing for indirect cost to be shared across, and no answer to \"what does this program cost to run\". The curriculum could also be read and never changed — adding a course to a term meant editing seed data.",
+      "A low-code platform that had accreted over 100 workflows and business rules across those ten modules. Much of that logic was documented nowhere except in the running system, so a rewrite that started from the requirements rather than from the system would have silently dropped behaviour people depend on.",
     solution:
-      "The Program → Program Term → Curriculum hierarchy, plus the write paths. Three rules I was about to build got overturned by measuring the seed first: a strict edit lock would have locked every term (0 of 19 are free of dependents); a planning-only lock would have been worse and wrong (5 of 19 planning terms already carry full rosters); and refusing any curriculum containing an archived course would have made 9 terms uneditable over 13 archived courses they already teach, so the check polices additions only. Package price stays typed rather than derived from cost — deriving it makes every program break even by construction and leaves the profitability screens answering a question whose answer is always zero.",
+      "Read the legacy system's own workflows and business rules and translated them into the new one, analysing over 100 of them. Mapped legacy data onto the new schema for Master Data and Invoice across more than 20 table relations, working old-to-new so migrated behaviour matched the rules it replaced.",
     outcome:
-      "No usage number — nothing is in production. What changed: creating a program is now one request that also creates its first term, its curriculum and its cost sheet, replacing a flow whose second step 404'd on its own detail page. 12 contract tests pin the shape, including one that fails if the first term is ever made optional.",
-    tech: ["Next.js 16 App Router", "React 19", "TypeScript strict", "Zod 4", "TanStack Query v5", "TanStack Table v9", "In-memory BFF"],
+      "Demonstrated the PMS Evaluation module end to end to stakeholders and reviewed adjacent modules alongside their owners. Tracked milestones and deliverables and raised delivery risks as they surfaced. Took part in cutover planning and in post-migration fixes.",
+    tech: ["Next.js", "C#", "ASP.NET Razor (.cshtml)", "TypeScript", "REST APIs", "Mendix (legacy)"],
   },
   {
-    slug: "cost-management-and-invoice",
-    name: "Cost Management\nand Invoice",
-    label: "Domain modeling · Money",
+    slug: "quotation-module",
+    name: "Quotation Module",
+    label: "Architecture · UX",
     description:
-      "Two kinds of cost on two kinds of sheet, a share that cannot fail to total 100, and one invoice per student per semester that prints itself.",
-    role: "Solo — the two-sheet split, the derived share, the copy-not-reference rule",
-    icon: "receipt",
-    year: "2026",
-    overview:
-      "Course cost sheets carry direct costs and travel with the course; program cost sheets carry indirect costs borne once per term and shared across the curriculum; a master catalog both draw on. Invoicing sits on top: one document per student per semester, billed from the curriculum rather than from what they personally attended. Seeded at 56 course sheets, 19 program sheets and 635 invoices.",
-    problem:
-      "allocationPercent was typed onto each course and had nothing to be a percentage of. Measured across the seed, 82 of 92 program pools recovered less than the cost they were meant to (median 50%) and 7 recovered more — cost leaked, invisibly, and every screen still added up. Revenue was package price × head count, which is what the price implies rather than what was billed.",
-    solution:
-      "Split by cost kind and enforced it server-side — adding an indirect item to a course sheet is a 422 — so double-counting is unrepresentable rather than merely detectable. The indirect share is derived from credits using largest-remainder distribution, so parts sum to the pool to the satang. I tested contact hours as the driver first and rejected them: the lecturer-hours quantity has medians of 40/43/43 for 2/3/4-credit courses, which is jitter, not signal. Catalog items copy onto a sheet rather than reference it, so raising a master price cannot silently rewrite an approved sheet from a closed semester; drift is computed on read and deleting a copied item is a 409. Revenue became the sum of billed invoice totals, split collected/outstanding, with net profit stated on the collected basis.",
-    outcome:
-      "Margins now spread −47.57% to 72.29% across 19 terms, median 45.80%, with 7 losses and 12 profits. Before the fix every program reported a 98–100% margin — arithmetically perfect and completely uninformative. CREDIT_RATE has exactly one definition, which the seed imports, so an invoice cannot disagree with the contract it bills.",
-    tech: ["Next.js 16 App Router", "TypeScript strict", "Zod 4", "Code 128 encoder (hand-written)", "date-fns", "Print-to-PDF"],
-  },
-  {
-    slug: "student-enrollment-and-biography",
-    name: "Student Enrollment\nand Biography",
-    label: "Domain rules · UX",
-    description:
-      "Enrollment entered at the program level and expanded into course enrollments, plus a student record the student themselves can edit.",
-    role: "Solo — program-first enrollment, the three add paths, the one-term-per-semester rule",
-    icon: "users",
-    year: "2026",
-    overview:
-      "The enrollment view lists program terms; opening one shows that term's students and, below them, the same term at course grain. A student is added from the term, never from a flat list, because a term is what a student joins. 635 program memberships expand to 1,297 course enrollments across 300 profiles. Students edit their own record — name, contact, major, year level, skills — owner-scoped, and can never change their program or delete themselves.",
-    problem:
-      "A flat student-to-course list doesn't describe what actually happens — the course enrollments follow from the curriculum, they aren't chosen one at a time. Nothing enforced that a student holds one program and one term per semester, and that rule is what makes \"one invoice per student per semester\" representable at all.",
-    solution:
-      "Three add paths — an existing profile, a student returning from a previous semester, or a new profile created on the way in — all sending one POST discriminated on source, so there is one write path and not three. Expansion and the conflict rules live in lib/calculations/ rather than in the server layer, specifically so they are unit-testable. Server enforcement: a second term in the same semester is 409, a term on another program is 422, and a withdrawn membership doesn't count, because re-enrolling someone who left is a real act. Status is progress (pending, active, completed, withdrawn) and never how they did — pass and fail derive from grades, and derive to unknown where a term carries no evaluation.",
-    outcome:
-      "No usage number. The one-program rule was verified to already hold across all 635 seeded memberships before it was enforced, so it is a constraint on reality rather than a constraint the data had to be bent to meet.",
-    tech: ["Next.js 16 App Router", "React Hook Form", "Zod 4", "TanStack Table v9", "URL search params for table state"],
-  },
-  {
-    slug: "student-evaluation-and-grade-report",
-    name: "Student Evaluation\nand Grade Report",
-    label: "Domain modeling · Access control",
-    description:
-      "A 360° evaluation where any role can be assessed, the weighting is configured per assessee, and the resulting report prints.",
-    role: "Solo — corrected the assessee model, the per-assessee blend, two recorded divergences from the reference design",
+      "Designed both the UX and the architecture, from the information model down to the data structure.",
+    role: "UX, architecture and frontend",
     icon: "clipboard",
-    year: "2026",
+    year: "2024",
     overview:
-      "Split by perspective: a staff view where a setup's window, scale, guidance and blend are configured, and an evaluator's own queue. Four evaluation roles — student, inspector, teacher, TA — and they sit on both sides. 36 setups over 134 groups. The report is one document per student per course-semester: means stated on the rating scale rather than converted, a derived percent, a letter grade, pass/fail at 4 out of 5, and written answers grouped by the role that gave them and never scored.",
+      "An internal quotation builder used by commercial teams across CP Group's divisions. It handles multi-line-item quotes with conditional pricing, customer-tier discounts, and lookup against the master product catalog.",
     problem:
-      "The reference design hard-coded the assessee as a student, which is wrong: a teacher is assessed by their students and a TA by both. Calling these evaluator roles instead of evaluation roles is exactly what produced that mistake. Separately, a weight blend that doesn't total 100 raises no error anywhere — it scales every score in the course by the same amount and looks entirely normal, which is the definition of a rule that has to be enforced server-side.",
+      "Quotations lived in scattered spreadsheet templates and email threads. Every division had its own format, there was no audit trail, simultaneous edits collided, and a quoted price had no link to the live catalog it was supposed to come from.",
     solution:
-      "One AssesseeConfig per assessed role, each carrying its own assessors and its own blend totaling 100 — which is why the weight meter lives inside the assessee card rather than once at the top of the screen. An ordering is a share of each role's own weight, not a fifth evaluator, so a teacher who both rates and ranks counts once; the headline criteria-versus-ordering split is derived and can never become an input. Two deliberate divergences from the reference, both recorded: orderings are strict permutations with no ties, and self-assessment is never permitted for any role — rendered as a locked control so the rule is visible on screen, and never accepted from a client regardless. Question sets are per relation, so what a student is asked about a peer differs from what they are asked about their teacher.",
+      "Designed the information model first — quote, versions, line items, pricing rules — and built the interface around it rather than the reverse. One source of truth on a normalised schema, price lookup against the catalog, an approval workflow with role-based gates, and generated document output.",
     outcome:
-      "Closed a real authorization defect: two endpoints inherited a prefix rule that had to stay readable for the queue to work, which meant every signed-in student could read a cohort's grades. Fixed by moving the check into the handler, because no path prefix can name a segment sitting behind a dynamic id. A score with no submissions is null — never zero and never \"not pass\", because has-not-passed and has-not-been-assessed are different claims.",
-    tech: ["Next.js 16 App Router", "Zod 4 discriminated unions", "Recharts", "TanStack Query v5", "Print-to-PDF"],
+      "Quotation turnaround went from 2–3 days to under 4 hours, and the pricing inconsistencies between divisions stopped, because there was no longer more than one place for a price to live.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "TanStack Query", "Zustand", "React Hook Form"],
   },
   {
-    slug: "design-system-and-architecture",
-    name: "Design System and Architecture",
-    label: "Design system · Architecture",
+    slug: "pms-evaluation-dynamic-roles",
+    name: "PMS Evaluation\nDynamic Role System",
+    label: "Architecture · Full ownership",
     description:
-      "Sakura — a token layer, 27 restyled primitives and a one-directional layering rule that all twelve modules are built on.",
-    role: "Solo — palette, tokens, the layering rule, the primitive adaptation, the accessibility contract",
-    icon: "palette",
-    year: "2026",
+      "Re-architected fixed-role evaluation forms into a system where roles are data, not code.",
+    role: "Full design ownership of the module",
+    icon: "users",
+    year: "2024",
     overview:
-      "A single CSS file holds 347 custom-property declarations across @theme inline, :root and .dark, and the design-system page is living documentation rendered from the shipped tokens rather than a static spec. Everything consumes it: 27 UI primitives, 10 shared patterns, 6 chart components, 10 layout pieces, and the twelve feature modules above them across 32 routes.",
+      "The Performance Management System runs evaluations across CP Group entities. Each form previously had its roles — manager, employee, HR — hard-coded into the schema. I own the full design of this module, and re-architected the form engine to take arbitrary role assignments per evaluation cycle.",
     problem:
-      "Before the layering rule there was nothing stopping a feature importing another feature, and the tree had drifted far enough to hold both spellings of the same word in one folder — enrolment-terms-screen.tsx sitting beside enrollment-screen.tsx. Color, spacing and density decisions were being made per screen, and there was no shared answer for the four states every data screen needs.",
+      "Business units evaluate differently: skip-level reviewers in one, peer review in another, cross-functional committees in a third. With roles fixed in code, every structure that did not already exist needed a code change, a deploy and a migration, and cycle setup ran into weeks.",
     solution:
-      "Tailwind v4 CSS-first with no JS config, so the type scale, tokens and custom utilities live in one reviewable file. shadcn/ui on the Radix base, restyled into the system rather than consumed as-is. The action color is a step deeper than the reference mockup's pink, because white text on the mockup pink only reaches 3.5:1. A motion layer of three durations and four curves registered in Tailwind's own namespaces, so duration-* cooperates with transition-* and a raw duration-200 cannot survive a scale change. Four pastel tone grounds that mean grouping, never state — state uses a badge. A decoration layer that is entirely aria-hidden and stripped by the print rule. And the strict layering rule — tokens → theme → ui → decor → data-viz → shared → features → app — with a grep that has to come back empty; the two cross-feature edges that did exist were resolved by moving code to its real owner and by duplicating fifteen lines of plumbing with a comment explaining why, rather than adding the edge.",
+      "Modelled roles as data. Each cycle declares a role schema, assignments map people onto those roles, and the form renders from the current user's roles rather than from hard-coded branches. The form reads its structure from configuration; the backend contract did not have to move.",
     outcome:
-      "Twelve modules, 32 routes and 50,701 lines of TypeScript consume it, and the cross-feature import grep is empty. Worst contrast pair computed from the shipped CSS by script: 4.52:1 light and 5.75:1 dark, both above the 4.5:1 floor, and the table is published on the design system page rather than buried in a doc. 349 tests across 22 files pass. What it cost to learn: moving from compact to comfortable density meant rewriting 107 hardcoded pixel classes by hand, which is why nothing carries a pixel size in a class name any more.",
-    tech: ["Tailwind CSS v4", "shadcn/ui", "Radix", "next-themes", "Lucide", "Recharts", "Vitest 4"],
-    wide: true,
+      "A new org structure no longer needs a code change and a deploy, which removed weeks of manual setup per evaluation cycle and made role-based evaluation work across participants without engineering involvement.",
+    tech: ["React", "TypeScript", "JSON form schema", "React Hook Form", "Zod"],
+  },
+  {
+    slug: "invoice-and-credit-note",
+    name: "Invoice &\nCredit Note",
+    label: "Frontend ownership · Integration",
+    description:
+      "Bilingual, multi-currency invoicing with live FX and direct SAP integration.",
+    role: "Frontend ownership",
+    icon: "receipt",
+    year: "2025",
+    overview:
+      "Frontend ownership of invoicing: invoices and credit notes across multiple currencies and in both Thai and English, integrated into SAP for accounting and Qsoft for document management.",
+    problem:
+      "The previous module was English-only, single-currency, and had no credit note flow at all. International entities were issuing documents outside the system entirely, which broke the audit chain, and the SAP sync was done by hand.",
+    solution:
+      "Rebuilt the frontend around bilingual number and date formatting, multi-currency entry with live FX rates, and credit notes as a first-class object that links back to the invoice it reverses. Documents sync directly to SAP over REST and push to Qsoft for archival, with TypeScript types matching the integration schema.",
+    outcome:
+      "International entities issue inside the system now instead of around it, the manual sync work is gone, and a credit note can be traced end to end back to its source invoice.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "SAP REST API", "Qsoft DMS", "Day.js"],
+  },
+  {
+    slug: "enrollment-and-seat-reservation",
+    name: "Enrollment &\nSeat Reservation",
+    label: "UX design · Information architecture",
+    description:
+      "Re-sequenced two long form flows around the decisions users actually make.",
+    role: "UX design and information architecture",
+    icon: "book",
+    year: "2024",
+    overview:
+      "Two related internal systems: training-course enrollment for employees, and reservation of corporate auditorium seating for events. Both deal with capacity, eligibility rules and approval chains.",
+    problem:
+      "Both were forms on forms — long, undifferentiated screens with no visible structure. People abandoned them midway and HR picked up the recovery by hand. The fields that actually decided the outcome, date conflicts and capacity warnings, sat below the fold.",
+    solution:
+      "Re-sequenced each flow into three steps — select, confirm, review — and surfaced eligibility and conflict warnings inline as the user types. Ordered the information by how much weight it carries in the decision rather than by the shape of the data model. Prototyped in Figma and tested before any code was written.",
+    outcome:
+      "Drop-off and recovery work were never instrumented, so there is no number to quote here. What did carry: stakeholders took the step-and-inline-warning pattern into adjacent modules, and it is now how those flows are built.",
+    tech: ["Figma", "UX research", "Information architecture", "React"],
+  },
+  {
+    slug: "design-system",
+    name: "Shared Design System",
+    label: "Design system · Cross-module",
+    description:
+      "shadcn/ui adapted into a brand-specific component set with semantic tokens and light/dark themes.",
+    role: "Contributor — proposed the approach, built and adapted components",
+    icon: "palette",
+    year: "2024–present",
+    overview:
+      "A shared frontend component system used across the internal modules, rather than each module arriving at its own buttons, tables and form controls.",
+    problem:
+      "Modules built at different times by different people drifted apart visually and behaviourally. The same control behaved differently depending on where you met it, and every new screen restated decisions that had already been made elsewhere.",
+    solution:
+      "Proposed adapting shadcn/ui rather than writing a component library from nothing, then built it out as a brand-specific set: reusable components, semantic design tokens rather than raw colour values, responsive patterns, and light and dark themes.",
+    outcome:
+      "New screens start from the shared components instead of from scratch, and a change to a token moves every module that uses it rather than one.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Radix", "Design tokens"],
   },
 ];
 
@@ -363,10 +480,14 @@ export const leadership = [
     detail:
       "Co-led two projects in the CP Exponential Surge 2025 program — ASAP, an AI shopping assistant designed as a partner product for e-commerce platforms, and a Personal Data System exploring how AI could turn personal data into a digital asset in future markets. Both advanced to the Surging Star round — among the final 11 teams selected from over 1,700 across CP Group.",
     photos: [
-      { src: "/images/leadership/cp-exponential-surge-2025/01.webp", caption: "Photo 1" },
-      { src: "/images/leadership/cp-exponential-surge-2025/02.webp", caption: "Photo 2" },
-      { src: "/images/leadership/cp-exponential-surge-2025/03.webp", caption: "Photo 3" },
-      { src: "/images/leadership/cp-exponential-surge-2025/04.webp", caption: "Photo 4" },
+      { src: "/images/leadership/cp-exponential-surge-2025/01.webp", caption:
+          "Programme participants on the steps of the CP Leadership Institute, a cohort of around a hundred in dark blazers and lanyards below the building's domed rotunda and gold elephant statues." },
+      { src: "/images/leadership/cp-exponential-surge-2025/02.webp", caption:
+          "Two presenters on stage at the Exponential Surge first pitching day, in front of a bilingual slide introducing Team ASAP — “AI Shopping Assistant Partner for E-commerce Platform”." },
+      { src: "/images/leadership/cp-exponential-surge-2025/03.webp", caption:
+          "The Work Together team pitching “Personal Data System for AI — Road to Personal Digital Asset” to a filled auditorium on the same pitching day." },
+      { src: "/images/leadership/cp-exponential-surge-2025/04.webp", caption:
+          "Eight team members lined up on stage for the judging round, one speaking into a microphone while the projection behind magnifies the panel." },
     ] as ReadonlyArray<{ src?: string; caption: string }>,
   },
   {
@@ -379,9 +500,12 @@ export const leadership = [
     detail:
       "Co-led the process improvement workshop at the 2026 company team-building program, guiding colleagues through mapping workflow friction and sketching concrete fixes. Took part in every sports and games session — the moments that turn coworkers into a team.",
     photos: [
-      { src: "/images/leadership/team-building-2026/01.webp", caption: "Photo 1" },
-      { src: "/images/leadership/team-building-2026/02.webp", caption: "Photo 2" },
-      { src: "/images/leadership/team-building-2026/03.webp", caption: "Photo 3" },
+      { src: "/images/leadership/team-building-2026/01.webp", caption:
+          "Group 6 at work during the D1 “Process Scope & SLA” exercise, colleagues gathered at a whiteboard mapping a process flow with the brief and a countdown timer projected behind them." },
+      { src: "/images/leadership/team-building-2026/02.webp", caption:
+          "The yellow team in the sports hall with a hand-painted team sign and the pyramid of stacked cups they built during a game." },
+      { src: "/images/leadership/team-building-2026/03.webp", caption:
+          "The yellow team with the PVC-pipe cart they built and decorated for the engineering challenge, one member seated in it." },
     ] as ReadonlyArray<{ src?: string; caption: string }>,
   },
   {
@@ -394,8 +518,10 @@ export const leadership = [
     detail:
       "3rd runner-up at the 2023 TD Hackathon with BaoBar — a Carabao draft beer membership package designed for the TD convenience store format, pairing a recurring membership model with on-tap fresh beer service.",
     photos: [
-      { src: "/images/leadership/td-hackathon-2023/01.webp", caption: "Photo 1" },
-      { src: "/images/leadership/td-hackathon-2023/02.webp", caption: "Photo 2" },
+      { src: "/images/leadership/td-hackathon-2023/01.webp", caption:
+          "The BaoBar team presenting to judges and fellow participants at the TD Platform Technology Campus, the business model and revenue streams projected behind them." },
+      { src: "/images/leadership/td-hackathon-2023/02.webp", caption:
+          "The BaoBar team holding the 3rd runner-up board at the TD Platform Technology Campus." },
     ] as ReadonlyArray<{ src?: string; caption: string }>,
   },
   {
@@ -408,9 +534,12 @@ export const leadership = [
     detail:
       "Selected from across four university campuses to represent the institution on a four-month engineering exchange at Nanyang Polytechnic, Singapore — collaborating with Singaporean engineering students on robotics, drone, and machine-building workshops, alongside speech projects exploring engineering solutions for an aging society.",
     photos: [
-      { src: "/images/leadership/temasek-exchange/01.webp", caption: "Photo 1" },
-      { src: "/images/leadership/temasek-exchange/02.webp", caption: "Photo 2" },
-      { src: "/images/leadership/temasek-exchange/03.webp", caption: "Photo 3" },
+      { src: "/images/leadership/temasek-exchange/01.webp", caption:
+          "Line-following and obstacle-avoidance robots built during the exchange, laid out on a table at Nanyang Polytechnic's School of Engineering." },
+      { src: "/images/leadership/temasek-exchange/02.webp", caption:
+          "Nanyang Polytechnic's campus at dusk, the reflecting pool in front of the main building." },
+      { src: "/images/leadership/temasek-exchange/03.webp", caption:
+          "A participant in the robotics lab holding a small tracked robot, an industrial robot arm on the bench behind, captioned “I like ROBOT”." },
     ] as ReadonlyArray<{ src?: string; caption: string }>,
   },
   {
@@ -423,9 +552,12 @@ export const leadership = [
     detail:
       "Selected as a Thai student representative on a 10-day ASEAN Plus Three Young Leader program hosted in Thailand — exchanging culture and joining leadership lectures alongside delegates from ASEAN member states plus China, Japan, and South Korea.",
     photos: [
-      { src: "/images/leadership/asean-young-leader/01.webp", caption: "Photo 1" },
-      { src: "/images/leadership/asean-young-leader/02.webp", caption: "Photo 2" },
-      { src: "/images/leadership/asean-young-leader/03.webp", caption: "Photo 3" },
+      { src: "/images/leadership/asean-young-leader/01.webp", caption:
+          "Delegates crowded into a selfie between sessions of the programme." },
+      { src: "/images/leadership/asean-young-leader/02.webp", caption:
+          "Delegates on stage in national dress during the cultural exchange night." },
+      { src: "/images/leadership/asean-young-leader/03.webp", caption:
+          "The full delegation in the ballroom — participants from ASEAN member states plus China, Japan and South Korea." },
     ] as ReadonlyArray<{ src?: string; caption: string }>,
   },
 ] as const;
@@ -585,15 +717,16 @@ export const cv = {
      homepage. Kept broad because the work spans API integration and system
      flow as well as UI; the "frontend-focused" keyword that recruiters and
      ATS filters search for is carried by the first line of `summary` below.
-     Dual title as of 2026-09-20 because Ita is applying to both straight
-     developer roles and Developer-with-BA hybrids. For a pure-frontend
-     application, drop "/ Business Analyst" and regenerate the PDF. */
-  headline: "Software Developer / Business Analyst",
+     Three titles as of 2026-10-11, matching personal.openTo on the Hero so
+     the CV and the site header make the same claim. For a pure-frontend
+     application, trim to "Software Developer" and regenerate the PDF —
+     and regenerate docs/cv-design-prompt.md with it. */
+  headline: "Software Developer | Business Analyst | Project Manager",
   summary:
-    "Software Developer with 3+ years of experience, frontend-focused across React and TypeScript, with strong experience in business analysis, UX, and cross-functional delivery. At CP Group, I translate business requirements into production applications, owning features across workflow design, UX/UI, frontend development, API integration, testing, and release. I have owned internal modules serving 200–1,500 employees across CP Group business divisions and regularly collaborate with users, business stakeholders, and vendors to define and refine system requirements. I also own contributions to a shared, brand-customized design system and reusable component architecture. My background in industrial product design and an M.Sc. in IT Management gives me a user- and product-oriented perspective that bridges business and engineering.",
+    "Software Developer with 3+ years of experience spanning business and system analysis, frontend engineering, and end-to-end delivery. At CP Group I contributed to the migration of an internal ERP from Mendix to Next.js and C# across ten modules, analysing over 100 existing workflows and mapping legacy data into the new schema. I translate business requirements into production applications, owning features across workflow design, UX/UI, frontend development, API integration, testing, and release. I have owned internal modules serving 200–1,500 employees across CP Group business divisions and regularly collaborate with users, business stakeholders, and vendors to define and refine system requirements. I also own contributions to a shared, brand-customized design system and reusable component architecture. My background in industrial product design and an M.Sc. in IT Management gives me a user- and product-oriented perspective that bridges business and engineering.",
   skills: {
-    Core: ["TypeScript", "JavaScript (ES6+)", "React", "Next.js (App Router)", "HTML", "CSS"],
-    "Styling & Motion": ["Tailwind CSS", "Motion / Framer Motion", "Responsive design"],
+    Core: ["TypeScript", "JavaScript (ES6+)", "React", "Next.js (App Router)", "HTML", "CSS", "ASP.NET Razor (.cshtml)"],
+    "Styling & Motion": ["Tailwind CSS", "Bootstrap", "shadcn/ui", "Motion / Framer Motion", "Responsive design"],
     "State, Forms & Data": ["TanStack Query", "Zustand", "React Hook Form", "Zod", "REST APIs"],
     "Testing & Quality": ["Jest", "Vitest", "React Testing Library", "Scenario testing", "SonarQube", "Checkmarx (SAST)"],
     Tooling: ["Git", "GitLab", "Vercel", "VS Code"],
@@ -607,13 +740,14 @@ export const cv = {
       org: "CP Leadership Institute, Bangkok",
       date: "Jul 2023 – Present",
       bullets: [
+        "Contributed to the migration of CP Group's internal ERP from Mendix to Next.js and C# across ten modules — Course, Cost Sheet & Allocation, Quotation, Biography, Enrollment, Invitation, Seat Reservation, Invoice & Credit Note, Login/Account/Role Permission, and PMS Evaluation — analysing over 100 existing workflows and business rules and translating legacy behaviour into the new system.",
+        "Mapped legacy data onto the new schema for Master Data and Invoice across more than 20 table relations, working through old-to-new schema mapping so migrated behaviour matched the business rules it replaced.",
+        "Tracked milestones and deliverables and raised delivery risks as they surfaced, took part in cutover planning and post-migration fixes, and demonstrated the PMS Evaluation module end to end to stakeholders while reviewing adjacent modules.",
         "Own frontend development across four internal business modules serving 200–1,500 users across CP Group business divisions, working across requirements, UX/UI, frontend architecture, API integration, testing, and delivery.",
-        "Translate business requirements into system workflows and user experiences, working directly with users, business stakeholders, and external vendors to clarify requirements, resolve edge cases, and align implementation with business processes.",
-        "Re-architected the PMS evaluation form engine to support dynamic role assignment and evaluation workflows, removing weeks of manual setup per evaluation cycle and enabling role-based evaluation across participants.",
+        "Owned the full design of the PMS Evaluation module, and of the smaller Biography module. Re-architected the PMS evaluation form engine to support dynamic role assignment and evaluation workflows, removing weeks of manual setup per evaluation cycle and enabling role-based evaluation across participants.",
         "Designed and developed the Quotation Module end to end, including UX, information architecture, and frontend implementation, reducing quotation turnaround from 2–3 days to under 4 hours.",
         "Developed a bilingual Thai/English, multi-currency Invoice & Credit Note module with live FX rates and direct SAP REST integration, enabling international entities to generate documents within the system.",
         "Contributed to the shared frontend design system, proposing and adapting shadcn/ui into a brand-specific component system with reusable components, semantic design tokens, responsive patterns, and light/dark themes used across modules.",
-        "Review UX, frontend architecture, and implementation quality across adjacent modules, identifying usability and technical issues and working with developers to improve consistency and maintainability.",
         "Support release quality through functional testing, unit testing, security/code-quality remediation, and test-case development, including structured test coverage across the modules owned by the team.",
       ],
     },
@@ -807,7 +941,7 @@ export const oywResume = {
    Astronaut dialog popup — random rotation of messages
    ============================================================ */
 export const astronautMessages = [
-  "Hey, welcome aboard. I'm Atiphan — software dev at the CP Leadership Institute, currently obsessed with how humans grow alongside AI without losing themselves. Glad you floated by.",
+  "Hey, welcome aboard. I'm Atiphan — I turn tangled internal systems into software people actually want to use. AI runs through my whole process; the judgement stays mine. Glad you floated by.",
   "Status report: building tools that help people work with AI, not chase it. If that question matters to you too, you'll find more about it across this site.",
   "Greetings, traveler. Currently transmitting from the CP Leadership Institute in Bangkok. Open frequencies for new opportunities — feel free to ping me.",
   "Fun fact — I came to software through industrial product design. That's why I keep asking how technology should adapt to humans, not the other way around.",

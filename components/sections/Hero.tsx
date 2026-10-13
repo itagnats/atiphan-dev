@@ -53,6 +53,20 @@ export function Hero() {
               )}
             </div>
 
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-dim">
+                Open to
+              </span>
+              {personal.openTo.map((role) => (
+                <span
+                  key={role}
+                  className="inline-flex items-center rounded-full border border-border-strong bg-(--pill-bg) px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-violet"
+                >
+                  {role}
+                </span>
+              ))}
+            </div>
+
             <p className="mt-7 max-w-115 text-[14px] leading-[1.7] text-text-muted md:mt-9 md:text-[15px]">
               {personal.intro}
             </p>

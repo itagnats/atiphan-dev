@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   selectedWork,
-  primeProject,
+  selectedWorkContext,
   cv,
   experiments,
   featuredProject,
@@ -37,47 +37,53 @@ describe("selectedWork", () => {
     }
   });
 
-  /* These five describe PRIME, a personal project. They replaced four CP Group
-     employer case studies. The two must not blur back together: a side project
-     described as employer work is the most damaging thing this file could come
-     to contain. */
-  it("never attributes this work to CP Group or any employer", () => {
+  /* These describe CP Group internal systems. The risk here is the mirror of
+     the one that applied when this block held PRIME: not that side work gets
+     claimed as employer work, but that an employer's internals get published
+     past what was agreed, or that an unsourced figure gets stated as fact. */
+  it("keeps internal systems unlinkable", () => {
+    // No screenshots, no internal URLs. A link to an intranet host would be
+    // dead to every reader and a disclosure to the one who recognises it.
     const blob = JSON.stringify(selectedWork).toLowerCase();
-    for (const claim of ["cp group", "cp leadership", "cpli", "my team", "our team"]) {
-      expect(blob, `employer attribution "${claim}"`).not.toContain(claim);
+    for (const claim of ["http://", "https://", "screenshot", ".local", "intranet"]) {
+      expect(blob, `internal reference "${claim}"`).not.toContain(claim);
     }
   });
 
-  it("claims no production users, because there are none", () => {
-    // Every figure in these write-ups is a seed count, a test count or a
-    // measured distribution. "1,200 active users" would be a fabrication, and
-    // an interviewer asking how it was measured is how that gets found out.
+  it("states no figure that was never sourced", () => {
+    // The 2023-era copy of this block carried these three. None could be
+    // traced to anything Ita confirmed, so none were carried over. If one
+    // comes back, it should come back because he supplied it.
     const blob = JSON.stringify(selectedWork).toLowerCase();
-    for (const claim of ["active users", "monthly users", "in production since"]) {
-      expect(blob, `usage claim "${claim}"`).not.toContain(claim);
+    for (const claim of ["400 monthly", "monthly active users", "5 simultaneous role"]) {
+      expect(blob, `unsourced figure "${claim}"`).not.toContain(claim);
+    }
+  });
+
+  it("does not inflate what was contributed into what was led", () => {
+    // The migration was contributed to, the cutover participated in, risks
+    // raised rather than registered. These are the exact phrasings an
+    // interviewer will test, and the ones a rewrite tends to quietly upgrade.
+    const migration = selectedWork.find((m) => m.slug === "erp-migration");
+    expect(migration, "the migration entry").toBeTruthy();
+    const blob = JSON.stringify(migration).toLowerCase();
+    for (const claim of ["led the migration", "ran the cutover", "risk register", "drove the migration"]) {
+      expect(blob, `overclaim "${claim}"`).not.toContain(claim);
     }
   });
 });
 
-describe("primeProject", () => {
-  it("keeps the provenance line saying it is personal work", () => {
-    // Work.tsx renders this verbatim under a heading that otherwise reads as
-    // employer work. If it is ever emptied, the page starts implying a job.
-    expect(primeProject.provenance.toLowerCase()).toContain("personal project");
+describe("selectedWorkContext", () => {
+  it("names the employer, because the heading above it does not", () => {
+    // Work.tsx renders this verbatim under a bare "Selected Work" heading.
+    // Emptied, the section stops saying whose systems these are.
+    expect(selectedWorkContext.provenance.toLowerCase()).toContain("cp leadership institute");
   });
 
-  it("does not describe itself as live while it is not deployed", () => {
-    if (!primeProject.deployed) {
-      expect(primeProject.blurb.toLowerCase()).not.toContain("live at");
-    }
-  });
-
-  it("has a real repository URL, or none at all", () => {
-    // An empty string is the honest "not public yet" state and renders no link.
-    // A half-filled placeholder would render a link that 404s.
-    if (primeProject.repoUrl !== "") {
-      expect(primeProject.repoUrl).toMatch(/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/);
-    }
+  it("keeps the internal flag set while there is nothing public to link", () => {
+    // The flag is what renders the "no public links" note. Clearing it without
+    // adding links leaves a portfolio section that looks like it forgot them.
+    expect(selectedWorkContext.internal).toBe(true);
   });
 });
 
@@ -97,10 +103,14 @@ describe("leadership", () => {
 
   // KNOWN GAP: captions are currently "Photo 1", "Photo 2", ... which tells a
   // screen-reader user nothing. Unskip once real descriptions are written.
-  it.skip("uses descriptive captions rather than 'Photo N'", () => {
+  it("uses descriptive captions rather than 'Photo N'", () => {
+    // The caption is also the image's alt text, so "Photo 3" leaves a
+    // screen-reader user with nothing. Unskipped on 2026-10-12 once all
+    // fifteen were written from the images themselves.
     for (const event of leadership) {
       for (const photo of event.photos) {
         expect(photo.caption, event.slug).not.toMatch(/^Photo \d+$/);
+        expect(photo.caption.length, event.slug).toBeGreaterThan(24);
       }
     }
   });
